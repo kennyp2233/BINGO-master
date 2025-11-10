@@ -71,108 +71,8 @@ export const BingoCardsPdf = ({ bingoCards, event, user }) => {
 
       pdf.addImage(cardsImgData, 'PNG', margin, margin + headerImgHeight + 5, cardsImgWidth, cardsImgHeight);
 
-      // ========== MARCAS DE AGUA (DESPUÉS, SOBRE EL CONTENIDO) ==========
-      // IMPORTANTE: Agregar marcas de agua DESPUÉS del contenido con opacidad baja
-      const addWatermarks = async (pdf, pageWidth, pageHeight) => {
-        const watermarkSize = 30; // Tamaño base en mm
-        const spacingX = 70; // Espaciado horizontal reducido para mejor cobertura
-        const spacingY = 90; // Espaciado vertical reducido para mejor cobertura
-        
-        // Helper para cargar imagen directamente desde módulo importado
-        const imageToBase64 = (imgModule) => {
-          return new Promise((resolve, reject) => {
-            try {
-              const img = new Image();
-              img.onload = () => {
-                const canvas = document.createElement('canvas');
-                canvas.width = img.width;
-                canvas.height = img.height;
-                const ctx = canvas.getContext('2d');
-                if (!ctx) {
-                  reject(new Error('Canvas context not available'));
-                  return;
-                }
-                ctx.drawImage(img, 0, 0);
-                const dataUrl = canvas.toDataURL('image/png');
-                resolve({ dataUrl, width: img.width, height: img.height });
-              };
-              img.onerror = () => reject(new Error('Image failed to load: ' + imgModule));
-              img.src = imgModule;
-            } catch (err) {
-              reject(err);
-            }
-          });
-        };
-
-        try {
-          // Cargar logos desde módulos importados con sus dimensiones
-          const logo1Data = await imageToBase64(logo1);
-          const logo2Data = await imageToBase64(logo2);
-
-          // Configurar opacidad baja para que sea sutil (marca de agua sobre contenido)
-          const gState = new pdf.GState({ opacity: 0.12 });
-          pdf.setGState(gState);
-
-          // Cubrir toda la página con marcas de agua en patrón repetido
-          // Comenzar desde el inicio (0,0) para cubrir toda la superficie
-          for (let y = 0; y < pageHeight; y += spacingY) {
-            for (let x = 0; x < pageWidth; x += spacingX) {
-              // Alternar entre logo1 y logo2 en patrón de ajedrez
-              const isLogo1 = (Math.floor(x / spacingX) + Math.floor(y / spacingY)) % 2 === 0;
-              const logoData = isLogo1 ? logo1Data : logo2Data;
-              
-              // Calcular dimensiones manteniendo el ratio de aspecto
-              const aspectRatio = logoData.width / logoData.height;
-              let imgWidth = watermarkSize;
-              let imgHeight = watermarkSize;
-              
-              if (aspectRatio > 1) {
-                // Imagen más ancha que alta
-                imgHeight = watermarkSize / aspectRatio;
-              } else if (aspectRatio < 1) {
-                // Imagen más alta que ancha
-                imgWidth = watermarkSize * aspectRatio;
-              }
-              
-              // Centrar la imagen en el espacio asignado
-              const offsetX = (watermarkSize - imgWidth) / 2;
-              const offsetY = (watermarkSize - imgHeight) / 2;
-              
-              pdf.addImage(
-                logoData.dataUrl,
-                'PNG',
-                x + offsetX,
-                y + offsetY,
-                imgWidth,
-                imgHeight
-              );
-            }
-          }
-
-          // Restaurar opacidad normal
-          pdf.setGState(new pdf.GState({ opacity: 1 }));
-        } catch (error) {
-          console.error('Error adding watermarks:', error);
-          // Fallback: agregar patrón de texto si las imágenes no cargan
-          const gState = new pdf.GState({ opacity: 0.08 });
-          pdf.setGState(gState);
-          
-          pdf.setFontSize(10);
-          pdf.setTextColor(128, 128, 128);
-          // Repetir patrón de texto en toda la página
-          for (let y = 20; y < pageHeight; y += spacingY) {
-            for (let x = 10; x < pageWidth - 30; x += spacingX) {
-              const text = (Math.floor(x / spacingX) + Math.floor(y / spacingY)) % 2 === 0 ? 'VÁLIDO' : 'OFICIAL';
-              pdf.text(text, x + spacingX / 2, y, { angle: 45, align: 'center' }); // Centrado
-            }
-          }
-          
-          pdf.setGState(new pdf.GState({ opacity: 1 }));
-        }
-      };
-
-      // Aplicar marcas de agua DESPUÉS del contenido (sobre él)
-      await addWatermarks(pdf, pageWidth, pageHeight);
+      // ========== MARCAS DE AGUA REMOVIDAS DEL DOCUMENTO COMPLETO ==========
+      // Las marcas de agua ahora se agregan solo en cada cartilla individual
     }
 
     // Reset display for all rows
@@ -207,11 +107,14 @@ export const BingoCardsPdf = ({ bingoCards, event, user }) => {
         style={{
           display: 'inline-block',
           margin: '8px', // Decreased from 15px
-          border: '2px solid #ccc',
+          border: '3px solid #20a337',
           padding: '10px', // Decreased from 15px
           width: '300px', // Increased from 280px
           boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-          textAlign: 'center' // Ensure internal content is centered
+          textAlign: 'center', // Ensure internal content is centered
+          position: 'relative', // Para posicionar las marcas de agua
+          background: '#FFF',
+          borderRadius: '10px'
         }}
       >
         <div style={{ textAlign: 'center', marginBottom: '8px', fontSize: '16px' }}>
@@ -223,57 +126,57 @@ export const BingoCardsPdf = ({ bingoCards, event, user }) => {
           {' '}
           {/* Center the bingo grid */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <Button variant="contained" style={{ ...headerStyle }}>
+            <Button variant="contained" style={{ backgroundColor: '#20a337', color: '#FFF', ...headerStyle }}>
               B
             </Button>
             {bingoCard.b.map((item, key) => (
-              <Button key={'b' + key} variant="outlined" style={cardSize}>
+              <Button key={'b' + key} variant="outlined" style={{ borderColor: '#ffee00', color: '#20a337', ...cardSize }}>
                 {item}
               </Button>
             ))}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <Button variant="contained" style={{ ...headerStyle }}>
+            <Button variant="contained" style={{ backgroundColor: '#20a337', color: '#FFF', ...headerStyle }}>
               I
             </Button>
             {bingoCard.i.map((item, key) => (
-              <Button key={'i' + key} variant="outlined" style={cardSize}>
+              <Button key={'i' + key} variant="outlined" style={{ borderColor: '#ffee00', color: '#20a337', ...cardSize }}>
                 {item}
               </Button>
             ))}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <Button variant="contained" style={{ ...headerStyle }}>
+            <Button variant="contained" style={{ backgroundColor: '#20a337', color: '#FFF', ...headerStyle }}>
               N
             </Button>
             {bingoCard.n.map((item, key) =>
               item === 'FREE' ? (
-                <Button key={'n' + key} variant="contained" style={{ ...cardSize, color: '#FFF' }}>
+                <Button key={'n' + key} variant="contained" style={{ backgroundColor: '#ffee00', color: '#20a337', ...cardSize }}>
                   F
                 </Button>
               ) : (
-                <Button key={'n' + key} variant="outlined" style={cardSize}>
+                <Button key={'n' + key} variant="outlined" style={{ borderColor: '#ffee00', color: '#20a337', ...cardSize }}>
                   {item}
                 </Button>
               )
             )}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <Button variant="contained" style={{ ...headerStyle }}>
+            <Button variant="contained" style={{ backgroundColor: '#20a337', color: '#FFF', ...headerStyle }}>
               G
             </Button>
             {bingoCard.g.map((item, key) => (
-              <Button key={'g' + key} variant="outlined" style={cardSize}>
+              <Button key={'g' + key} variant="outlined" style={{ borderColor: '#ffee00', color: '#20a337', ...cardSize }}>
                 {item}
               </Button>
             ))}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <Button variant="contained" style={{ ...headerStyle }}>
+            <Button variant="contained" style={{ backgroundColor: '#20a337', color: '#FFF', ...headerStyle }}>
               O
             </Button>
             {bingoCard.o.map((item, key) => (
-              <Button key={'o' + key} variant="outlined" style={cardSize}>
+              <Button key={'o' + key} variant="outlined" style={{ borderColor: '#ffee00', color: '#20a337', ...cardSize }}>
                 {item}
               </Button>
             ))}
@@ -283,6 +186,31 @@ export const BingoCardsPdf = ({ bingoCards, event, user }) => {
           {' '}
           {/* Increased font size and margin */}
           ID: {bingoCard.id ? bingoCard.id.substring(0, 8) : 'N/A'}
+        </div>
+        
+        {/* Marca de agua del contrato centrada en la cartilla */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          opacity: 0.1,
+          zIndex: 1,
+          pointerEvents: 'none'
+        }}>
+          <img src={logo1} alt="contrato" style={{ width: '120px', height: 'auto' }} />
+        </div>
+        
+        {/* Marca de agua de la empresa en la esquina superior derecha */}
+        <div style={{
+          position: 'absolute',
+          top: '5px',
+          right: '5px',
+          opacity: 0.1,
+          zIndex: 1,
+          pointerEvents: 'none'
+        }}>
+          <img src={logo2} alt="empresa" style={{ width: '80px', height: 'auto' }} />
         </div>
       </div>
     );
@@ -364,7 +292,7 @@ export const BingoCardsPdf = ({ bingoCards, event, user }) => {
         </div>
 
         <h3 style={{ marginBottom: '8px', fontSize: '16px' }}>Cartillas de Bingo</h3>
-        <div id="cards-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div id="cards-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '710px' }}>
           {organizeCards()}
         </div>
       </div>
