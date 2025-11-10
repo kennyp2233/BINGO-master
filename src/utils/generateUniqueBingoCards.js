@@ -15,11 +15,11 @@ const generateUniqueNumbers = (min, max, count) => {
 // Función para generar una cartilla de Bingo
 const generateBingoCard = (event, eventName, eventPrice, cardNumber) => {
   const columns = {
-    B: generateUniqueNumbers(1, 15, 5),
-    I: generateUniqueNumbers(16, 30, 5),
-    N: generateUniqueNumbers(31, 45, 4), // 4 números porque la posición central es "Free"
-    G: generateUniqueNumbers(46, 60, 5),
-    O: generateUniqueNumbers(61, 75, 5)
+    B: generateUniqueNumbers(1, 25, 5),
+    I: generateUniqueNumbers(26, 50, 5),
+    N: generateUniqueNumbers(51, 75, 4), // 4 números porque la posición central es "Free"
+    G: generateUniqueNumbers(76, 100, 5),
+    O: generateUniqueNumbers(101, 125, 5)
   };
 
   // Insertar "FREE" en la posición central

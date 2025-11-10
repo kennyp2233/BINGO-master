@@ -4,6 +4,8 @@ import html2canvas from 'html2canvas';
 import { Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import logo1 from 'assets/images/marca_agua/logo-contrato.png';
+import logo2 from 'assets/images/marca_agua/logo-empresa.png';
 
 export const BingoCardsPdf = ({ bingoCards, event, user }) => {
   const pdfRef = useRef();
@@ -41,7 +43,7 @@ export const BingoCardsPdf = ({ bingoCards, event, user }) => {
         if (row) row.style.display = 'flex';
       }
 
-      // Add event and user information to each page
+      // ========== AGREGAR CONTENIDO (header y cards) PRIMERO ==========
       const headerCanvas = await html2canvas(document.getElementById('pdf-header'), {
         scale: 2,
         useCORS: true,
@@ -68,6 +70,109 @@ export const BingoCardsPdf = ({ bingoCards, event, user }) => {
       const cardsImgHeight = (cardsCanvas.height * cardsImgWidth) / cardsCanvas.width;
 
       pdf.addImage(cardsImgData, 'PNG', margin, margin + headerImgHeight + 5, cardsImgWidth, cardsImgHeight);
+
+      // ========== MARCAS DE AGUA (DESPUÉS, SOBRE EL CONTENIDO) ==========
+      // IMPORTANTE: Agregar marcas de agua DESPUÉS del contenido con opacidad baja
+      const addWatermarks = async (pdf, pageWidth, pageHeight) => {
+        const watermarkSize = 30; // Tamaño base en mm
+        const spacingX = 70; // Espaciado horizontal reducido para mejor cobertura
+        const spacingY = 90; // Espaciado vertical reducido para mejor cobertura
+        
+        // Helper para cargar imagen directamente desde módulo importado
+        const imageToBase64 = (imgModule) => {
+          return new Promise((resolve, reject) => {
+            try {
+              const img = new Image();
+              img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) {
+                  reject(new Error('Canvas context not available'));
+                  return;
+                }
+                ctx.drawImage(img, 0, 0);
+                const dataUrl = canvas.toDataURL('image/png');
+                resolve({ dataUrl, width: img.width, height: img.height });
+              };
+              img.onerror = () => reject(new Error('Image failed to load: ' + imgModule));
+              img.src = imgModule;
+            } catch (err) {
+              reject(err);
+            }
+          });
+        };
+
+        try {
+          // Cargar logos desde módulos importados con sus dimensiones
+          const logo1Data = await imageToBase64(logo1);
+          const logo2Data = await imageToBase64(logo2);
+
+          // Configurar opacidad baja para que sea sutil (marca de agua sobre contenido)
+          const gState = new pdf.GState({ opacity: 0.12 });
+          pdf.setGState(gState);
+
+          // Cubrir toda la página con marcas de agua en patrón repetido
+          // Comenzar desde el inicio (0,0) para cubrir toda la superficie
+          for (let y = 0; y < pageHeight; y += spacingY) {
+            for (let x = 0; x < pageWidth; x += spacingX) {
+              // Alternar entre logo1 y logo2 en patrón de ajedrez
+              const isLogo1 = (Math.floor(x / spacingX) + Math.floor(y / spacingY)) % 2 === 0;
+              const logoData = isLogo1 ? logo1Data : logo2Data;
+              
+              // Calcular dimensiones manteniendo el ratio de aspecto
+              const aspectRatio = logoData.width / logoData.height;
+              let imgWidth = watermarkSize;
+              let imgHeight = watermarkSize;
+              
+              if (aspectRatio > 1) {
+                // Imagen más ancha que alta
+                imgHeight = watermarkSize / aspectRatio;
+              } else if (aspectRatio < 1) {
+                // Imagen más alta que ancha
+                imgWidth = watermarkSize * aspectRatio;
+              }
+              
+              // Centrar la imagen en el espacio asignado
+              const offsetX = (watermarkSize - imgWidth) / 2;
+              const offsetY = (watermarkSize - imgHeight) / 2;
+              
+              pdf.addImage(
+                logoData.dataUrl,
+                'PNG',
+                x + offsetX,
+                y + offsetY,
+                imgWidth,
+                imgHeight
+              );
+            }
+          }
+
+          // Restaurar opacidad normal
+          pdf.setGState(new pdf.GState({ opacity: 1 }));
+        } catch (error) {
+          console.error('Error adding watermarks:', error);
+          // Fallback: agregar patrón de texto si las imágenes no cargan
+          const gState = new pdf.GState({ opacity: 0.08 });
+          pdf.setGState(gState);
+          
+          pdf.setFontSize(10);
+          pdf.setTextColor(128, 128, 128);
+          // Repetir patrón de texto en toda la página
+          for (let y = 20; y < pageHeight; y += spacingY) {
+            for (let x = 10; x < pageWidth - 30; x += spacingX) {
+              const text = (Math.floor(x / spacingX) + Math.floor(y / spacingY)) % 2 === 0 ? 'VÁLIDO' : 'OFICIAL';
+              pdf.text(text, x + spacingX / 2, y, { angle: 45, align: 'center' }); // Centrado
+            }
+          }
+          
+          pdf.setGState(new pdf.GState({ opacity: 1 }));
+        }
+      };
+
+      // Aplicar marcas de agua DESPUÉS del contenido (sobre él)
+      await addWatermarks(pdf, pageWidth, pageHeight);
     }
 
     // Reset display for all rows
@@ -264,7 +369,7 @@ export const BingoCardsPdf = ({ bingoCards, event, user }) => {
         </div>
       </div>
 
-      <Button variant="contained" onClick={generatePDF} color="primary" startIcon={<PictureAsPdfIcon />} style={{ color: '#FFF' }}>
+      <Button variant="contained" onClick={async () => await generatePDF()} color="primary" startIcon={<PictureAsPdfIcon />} style={{ color: '#FFF' }}>
         Descargar PDF
       </Button>
     </>
