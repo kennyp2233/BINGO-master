@@ -4,7 +4,7 @@ export const BINGO_CONFIG = {
   DEFAULT: {
     LETTERS: ['B', 'I', 'N', 'G', 'O'],
     NUMBERS_PER_LETTER: 25, // 25 números por letra (excepto N que tiene 24 + FREE)
-    TOTAL_NUMBERS: 75,
+    TOTAL_NUMBERS: 125,
     RANGES: {
       B: { start: 1, end: 25, count: 5 },
       I: { start: 26, end: 50, count: 5 },
