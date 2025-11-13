@@ -6,7 +6,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { checkForBingoWinner } from 'config/firebaseEvents';
 import { uiStyles } from '../Game.styles';
-import { bingoValues } from 'store/constant';
 import { titles } from '../Game.texts';
 import Confetti from 'react-confetti';
 import { ShowWinner } from './ShowWinner';
@@ -16,6 +15,7 @@ import { BoardGame } from './BoardGame';
 import { BoardActions } from './BoardActions';
 import { ShowAllWinners } from './ShowAllWinners';
 import { IconTrophy } from '@tabler/icons';
+import { getLetterForNumber, getTotalNumbers } from 'utils/bingoConfig';
 
 export default function Game() {
   const [openLoader, setOpenLoader] = useState(false);
@@ -58,34 +58,16 @@ export default function Game() {
         setNumber(lastNum);
 
         // Set letter based on last number
-        if (lastNum <= bingoValues.B_END) {
-          setLetter(titles.b);
-        } else if (lastNum >= bingoValues.I_START && lastNum <= bingoValues.I_END) {
-          setLetter(titles.i);
-        } else if (lastNum >= bingoValues.N_START && lastNum <= bingoValues.N_END) {
-          setLetter(titles.n);
-        } else if (lastNum >= bingoValues.G_START && lastNum <= bingoValues.G_END) {
-          setLetter(titles.g);
-        } else if (lastNum >= bingoValues.O_START && lastNum <= bingoValues.O_END) {
-          setLetter(titles.o);
-        }
+        const lastLetter = getLetterForNumber(lastNum);
+        setLetter(titles[lastLetter.toLowerCase()]);
 
         // If there's a previous number, restore it too
         if (parsedNumbers.length > 1) {
           const prevNum = parsedNumbers[parsedNumbers.length - 2];
           setPrevNumber(prevNum);
 
-          if (prevNum <= bingoValues.B_END) {
-            setPrevLetter(titles.b);
-          } else if (prevNum >= bingoValues.I_START && prevNum <= bingoValues.I_END) {
-            setPrevLetter(titles.i);
-          } else if (prevNum >= bingoValues.N_START && prevNum <= bingoValues.N_END) {
-            setPrevLetter(titles.n);
-          } else if (prevNum >= bingoValues.G_START && prevNum <= bingoValues.G_END) {
-            setPrevLetter(titles.g);
-          } else if (prevNum >= bingoValues.O_START && prevNum <= bingoValues.O_END) {
-            setPrevLetter(titles.o);
-          }
+          const prevLetter = getLetterForNumber(prevNum);
+          setPrevLetter(titles[prevLetter.toLowerCase()]);
         }
       }
 
@@ -109,7 +91,7 @@ export default function Game() {
   }, [selectedGame, bingoNumbers, resultBingo]);
 
   const handleNextBall = () => {
-    randomNumber(bingoValues.INIT, bingoValues.LIMIT);
+    randomNumber(1, getTotalNumbers());
   };
 
   const randomNumber = (min, max) => {
@@ -123,22 +105,9 @@ export default function Game() {
       }
       setNumber(num);
       handleSelectBall(num);
-      if (num <= bingoValues.B_END) {
-        setLetter(titles.b);
-        setResultBingo(resultBingo + '-' + titles.b + num);
-      } else if (num >= bingoValues.I_START && num <= bingoValues.I_END) {
-        setLetter(titles.i);
-        setResultBingo(resultBingo + '-' + titles.i + num);
-      } else if (num >= bingoValues.N_START && num <= bingoValues.N_END) {
-        setLetter(titles.n);
-        setResultBingo(resultBingo + '-' + titles.n + num);
-      } else if (num >= bingoValues.G_START && num <= bingoValues.G_END) {
-        setLetter(titles.g);
-        setResultBingo(resultBingo + '-' + titles.g + num);
-      } else if (num >= bingoValues.O_START && num <= bingoValues.O_END) {
-        setLetter(titles.o);
-        setResultBingo(resultBingo + '-' + titles.o + num);
-      }
+      const letterForNum = getLetterForNumber(num);
+      setLetter(titles[letterForNum.toLowerCase()]);
+      setResultBingo(resultBingo + '-' + titles[letterForNum.toLowerCase()] + num);
       setCont(cont + 1);
       // if (cont == bingoValues.LIMIT - 1) {
       //   setVisible(false);

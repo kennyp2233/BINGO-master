@@ -7,68 +7,66 @@ export function BingoCard() {
   var o = [];
 
   for (var a = 0; a < 5; a++) {
-    b[a] = Math.floor(Math.random() * (15 - 1) + 1);
+    b[a] = Math.floor(Math.random() * (25 - 1 + 1)) + 1;
   }
 
-  for (var outer = 0; outer < b.length; outer++) {
-    for (var inner = 0; inner < b.length; inner++) {
-      if (inner != outer && b[outer] == b[inner]) {
-        b[outer] = Math.floor(Math.random() * (15 - 1) + 1);
-      }
-    }
+  // Remove duplicates and ensure unique
+  b = [...new Set(b)];
+  while (b.length < 5) {
+    const num = Math.floor(Math.random() * (25 - 1 + 1)) + 1;
+    if (!b.includes(num)) b.push(num);
   }
+  b.sort((a, b) => a - b);
   matrix.push(b);
 
   for (var a1 = 0; a1 < 5; a1++) {
-    i[a1] = Math.floor(Math.random() * (30 - 16) + 16);
+    i[a1] = Math.floor(Math.random() * (50 - 26 + 1)) + 26;
   }
 
-  for (var outer1 = 0; outer1 < i.length; outer1++) {
-    for (var inner1 = 0; inner1 < i.length; inner1++) {
-      if (inner1 != outer1 && i[outer1] == i[inner1]) {
-        i[outer1] = Math.floor(Math.random() * (30 - 16) + 16);
-      }
-    }
+  i = [...new Set(i)];
+  while (i.length < 5) {
+    const num = Math.floor(Math.random() * (50 - 26 + 1)) + 26;
+    if (!i.includes(num)) i.push(num);
   }
+  i.sort((a, b) => a - b);
   matrix.push(i);
 
-  for (var a2 = 0; a2 < 5; a2++) {
-    n[a2] = Math.floor(Math.random() * (45 - 31) + 31);
+  for (var a2 = 0; a2 < 4; a2++) { // 4 for N since FREE in center
+    n[a2] = Math.floor(Math.random() * (75 - 51 + 1)) + 51;
   }
 
-  for (var outer2 = 0; outer2 < n.length; outer2++) {
-    for (var inner2 = 0; inner2 < n.length; inner2++) {
-      if (inner2 != outer2 && n[outer2] == n[inner2]) {
-        n[outer2] = Math.floor(Math.random() * (45 - 31) + 31);
-      }
-    }
+  n = [...new Set(n)];
+  while (n.length < 4) {
+    const num = Math.floor(Math.random() * (75 - 51 + 1)) + 51;
+    if (!n.includes(num)) n.push(num);
   }
+  n.sort((a, b) => a - b);
+  // Insert FREE in center
+  n.splice(2, 0, 'FREE');
   matrix.push(n);
 
   for (var a3 = 0; a3 < 5; a3++) {
-    g[a3] = Math.floor(Math.random() * (60 - 46) + 46);
+    g[a3] = Math.floor(Math.random() * (100 - 76 + 1)) + 76;
   }
 
-  for (var outer3 = 0; outer3 < g.length; outer3++) {
-    for (var inner3 = 0; inner3 < g.length; inner3++) {
-      if (inner3 != outer3 && g[outer3] == g[inner3]) {
-        g[outer3] = Math.floor(Math.random() * (60 - 46) + 46);
-      }
-    }
+  g = [...new Set(g)];
+  while (g.length < 5) {
+    const num = Math.floor(Math.random() * (100 - 76 + 1)) + 76;
+    if (!g.includes(num)) g.push(num);
   }
+  g.sort((a, b) => a - b);
   matrix.push(g);
 
   for (var a4 = 0; a4 < 5; a4++) {
-    o[a4] = Math.floor(Math.random() * (75 - 61) + 61);
+    o[a4] = Math.floor(Math.random() * (125 - 101 + 1)) + 101;
   }
 
-  for (var outer4 = 0; outer4 < o.length; outer4++) {
-    for (var inner4 = 0; inner4 < o.length; inner4++) {
-      if (inner4 != outer4 && o[outer4] == o[inner4]) {
-        o[outer4] = Math.floor(Math.random() * (75 - 61) + 61);
-      }
-    }
+  o = [...new Set(o)];
+  while (o.length < 5) {
+    const num = Math.floor(Math.random() * (125 - 101 + 1)) + 101;
+    if (!o.includes(num)) o.push(num);
   }
+  o.sort((a, b) => a - b);
   matrix.push(o);
 
   return matrix;

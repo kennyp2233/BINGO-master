@@ -1,15 +1,9 @@
 import { Grid } from '@mui/material';
 import { uiStyles } from '../Game.styles';
 import { titles } from '../Game.texts';
-import { bingoBBalls, bingoGBalls, bingoIBalls, bingoNBalls, bingoOBalls } from 'utils/generateBoard';
+import { getLetterNumbers, getLetters } from 'utils/bingoConfig';
 
 export const BoardGame = ({ number, letter, prevNumber, prevLetter }) => {
-  let b = bingoBBalls();
-  let i = bingoIBalls();
-  let n = bingoNBalls();
-  let g = bingoGBalls();
-  let o = bingoOBalls();
-
   return (
     <>
       <Grid container style={{ marginTop: 10 }}>
@@ -47,107 +41,54 @@ export const BoardGame = ({ number, letter, prevNumber, prevLetter }) => {
 
       <Grid container>
         <Grid item xs={12}>
-          <Grid container spacing={1}>
-            <Grid item lg={1} md={1} sm={1} xs={1} sx={uiStyles.leftCell}>
-              <h3 style={uiStyles.cellLetter}>{titles.b}</h3>
-            </Grid>
-            <Grid item lg={10} md={10} sm={10} xs={10} sx={uiStyles.midCol}>
-              <Grid item xs={12}>
-                <Grid container spacing={1}>
-                  {b.map((item) => (
-                    <Grid id={'btn' + item} key={item} item lg={1.5} md={1.5} sm={1.5} xs={1.5} sx={uiStyles.midCell}>
-                      <h4 style={uiStyles.cellItem}>{item}</h4>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item lg={1} md={1} sm={1} xs={1} sx={uiStyles.leftCell}>
-              <h3 style={uiStyles.cellLetter}>{titles.b}</h3>
-            </Grid>
+          {/* Renderizar filas dinámicamente basadas en la configuración */}
+          {getLetters().map((letterKey) => {
+            const numbers = getLetterNumbers(letterKey);
+            const titleKey = letterKey.toLowerCase();
+            const gridSize = Math.ceil(Math.sqrt(numbers.length));
+            const xsValue = 12 / gridSize;
 
-            <Grid item lg={1} md={1} sm={1} xs={1} sx={uiStyles.leftCell}>
-              <h3 style={uiStyles.cellLetter}>{titles.i}</h3>
-            </Grid>
-            <Grid item lg={10} md={10} sm={10} xs={10} sx={uiStyles.midCol}>
-              <Grid item xs={12}>
-                <Grid container spacing={1}>
-                  {i.map((item) => (
-                    <Grid id={'btn' + item} key={item} item lg={1.5} md={1.5} sm={1.5} xs={1.5} sx={uiStyles.midCell}>
-                      <h4 style={uiStyles.cellItem}>{item}</h4>
-                    </Grid>
-                  ))}
+            return (
+              <Grid container sx={{ display: 'flex', alignItems: 'center', mb: 1 }} key={letterKey}>
+                <Grid item sx={{ width: 60, textAlign: 'center', backgroundColor: '#179cdc', height: 180, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 1 }}>
+                  <h3 style={{ ...uiStyles.cellLetter, color: '#FFF' }}>{titles[titleKey]}</h3>
+                </Grid>
+                <Grid item sx={{ flex: 1, mx: 1 }}>
+                  <Grid container spacing={0.5} sx={{ height: 180 }}>
+                    {numbers.map((item) => (
+                      <Grid
+                        id={'btn' + item}
+                        key={item}
+                        item
+                        xs={xsValue}
+                        sx={{
+                          backgroundColor: '#FFF',
+                          color: '#179cdc',
+                          fontSize: 14,
+                          fontWeight: 'bold',
+                          border: '1px solid #EFEFEF',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          height: 35,
+                          borderRadius: 1,
+                          cursor: 'default',
+                          '&:hover': {
+                            backgroundColor: '#F0F0F0'
+                          }
+                        }}
+                      >
+                        {item}
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Grid>
+                <Grid item sx={{ width: 60, textAlign: 'center', backgroundColor: '#179cdc', height: 180, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 1 }}>
+                  <h3 style={{ ...uiStyles.cellLetter, color: '#FFF' }}>{titles[titleKey]}</h3>
                 </Grid>
               </Grid>
-            </Grid>
-            <Grid item lg={1} md={1} sm={1} xs={1} sx={uiStyles.leftCell}>
-              <h3 style={uiStyles.cellLetter}>{titles.i}</h3>
-            </Grid>
-
-            <Grid item lg={1} md={1} sm={1} xs={1} sx={uiStyles.leftCell}>
-              <h3 style={uiStyles.cellLetter}>{titles.n}</h3>
-            </Grid>
-            <Grid item lg={10} md={10} sm={10} xs={10} sx={uiStyles.midCol}>
-              <Grid item xs={12}>
-                <Grid container spacing={1}>
-                  {n.map((item) => (
-                    <Grid id={'btn' + item} key={item} item lg={1.5} md={1.5} sm={1.5} xs={1.5} sx={uiStyles.midCell}>
-                      <h4 style={uiStyles.cellItem}>{item}</h4>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item lg={1} md={1} sm={1} xs={1} sx={uiStyles.leftCell}>
-              <h3 style={uiStyles.cellLetter}>{titles.n}</h3>
-            </Grid>
-
-            <Grid item lg={1} md={1} sm={1} xs={1} sx={uiStyles.leftCell}>
-              <h3 style={uiStyles.cellLetter}>{titles.g}</h3>
-            </Grid>
-            <Grid item lg={10} md={10} sm={10} xs={10} sx={uiStyles.midCol}>
-              <Grid item xs={12}>
-                <Grid container spacing={1}>
-                  {g.map((item) => (
-                    <Grid id={'btn' + item} key={item} item lg={1.5} md={1.5} sm={1.5} xs={1.5} sx={uiStyles.midCell}>
-                      <h4 style={uiStyles.cellItem}>{item}</h4>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item lg={1} md={1} sm={1} xs={1} sx={uiStyles.leftCell}>
-              <h3 style={uiStyles.cellLetter}>{titles.g}</h3>
-            </Grid>
-
-            <Grid item lg={1} md={1} sm={1} xs={1} sx={uiStyles.leftCell}>
-              <h3 style={uiStyles.cellLetter}>{titles.o}</h3>
-            </Grid>
-            <Grid item lg={10} md={10} sm={10} xs={10} sx={uiStyles.midCol}>
-              <Grid item xs={12}>
-                <Grid container spacing={1}>
-                  {o.map((item) => (
-                    <Grid id={'btn' + item} key={item} item lg={1.5} md={1.5} sm={1.5} xs={1.5} sx={uiStyles.midCell}>
-                      <h4 style={uiStyles.cellItem}>{item}</h4>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item lg={1} md={1} sm={1} xs={1} sx={uiStyles.leftCell}>
-              <h3 style={uiStyles.cellLetter}>{titles.o}</h3>
-            </Grid>
-            <Grid item lg={6} md={6} sm={6} xs={6} sx={uiStyles.panelBallEndLeft}>
-              <center>
-                <span style={uiStyles.panelText}>{''}</span>
-              </center>
-            </Grid>
-            <Grid item lg={6} md={6} sm={6} xs={6} sx={uiStyles.panelBallEndRight}>
-              <center>
-                <span style={uiStyles.panelText}>{''}</span>
-              </center>
-            </Grid>
-          </Grid>
+            );
+          })}
         </Grid>
       </Grid>
     </>

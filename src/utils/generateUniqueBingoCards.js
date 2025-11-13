@@ -1,6 +1,7 @@
 import { bingoValues } from 'store/constant';
 import { fullDate } from './validations';
 import { generateId } from './idGenerator';
+import { ACTIVE_CONFIG, getLetterConfig } from './bingoConfig';
 
 // Función para generar un número aleatorio sin repetición
 const generateUniqueNumbers = (min, max, count) => {
@@ -14,44 +15,53 @@ const generateUniqueNumbers = (min, max, count) => {
 
 // Función para generar una cartilla de Bingo
 const generateBingoCard = (event, eventName, eventPrice, cardNumber) => {
-  const columns = {
-    B: generateUniqueNumbers(1, 25, 5),
-    I: generateUniqueNumbers(26, 50, 5),
-    N: generateUniqueNumbers(51, 75, 4), // 4 números porque la posición central es "Free"
-    G: generateUniqueNumbers(76, 100, 5),
-    O: generateUniqueNumbers(101, 125, 5)
-  };
+  const columns = {};
 
-  // Insertar "FREE" en la posición central
-  const fullN = [...columns.N.slice(0, 2), 'FREE', ...columns.N.slice(2)];
+  // Generar números para cada letra usando la configuración centralizada
+  ACTIVE_CONFIG.LETTERS.forEach(letter => {
+    const config = getLetterConfig(letter);
+    columns[letter] = generateUniqueNumbers(config.start, config.end, config.count);
+    // Ordenar los números
+    columns[letter].sort((a, b) => a - b);
+  });
 
-  // Crear un objeto con los valores de las columnas y todos los valores combinados
-  const allValues = {
-    B: columns.B,
-    I: columns.I,
-    N: fullN,
-    G: columns.G,
-    O: columns.O
-  };
+  // Insertar "FREE" en la posición central de N (si existe)
+  if (columns.N) {
+    const fullN = [...columns.N.slice(0, 2), 'FREE', ...columns.N.slice(2)];
+    columns.N = fullN;
+  }
 
-  const combinedValues = [...columns.B, ...columns.I, ...fullN, ...columns.G, ...columns.O];
+  // Crear arrays para cada letra (manteniendo compatibilidad con el código existente)
+  const allValues = {};
+  ACTIVE_CONFIG.LETTERS.forEach(letter => {
+    allValues[letter.toLowerCase()] = columns[letter];
+  });
 
-  return {
+  // Crear array combinado de todos los valores
+  const combinedValues = [];
+  ACTIVE_CONFIG.LETTERS.forEach(letter => {
+    combinedValues.push(...columns[letter]);
+  });
+
+  // Crear el objeto de la cartilla
+  const card = {
     id: generateId(10),
     event: event,
     eventName: eventName,
     price: eventPrice,
-    b: allValues.B,
-    i: allValues.I,
-    n: allValues.N,
-    g: allValues.G,
-    o: allValues.O,
     bingoNumbers: combinedValues,
     order: cardNumber,
     num: cardNumber + '',
     createAt: fullDate(),
     state: bingoValues.STATE_AVAILABLE
   };
+
+  // Agregar propiedades dinámicas para cada letra
+  ACTIVE_CONFIG.LETTERS.forEach(letter => {
+    card[letter.toLowerCase()] = allValues[letter.toLowerCase()];
+  });
+
+  return card;
 };
 
 // Verificar si dos cartillas son iguales

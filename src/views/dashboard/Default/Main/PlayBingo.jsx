@@ -7,6 +7,7 @@ import { getGameCardsByUserEvent } from 'config/firebaseEvents';
 import { onAuthStateChanged } from 'firebase/auth';
 import { authentication } from 'config/firebase';
 import ReactPlayer from 'react-player';
+import { getLetters } from 'utils/bingoConfig';
 //Notifications
 //import { ToastContainer, toast } from 'react-toastify';
 //import 'react-toastify/dist/ReactToastify.css';
@@ -31,30 +32,10 @@ const PlayBingo = () => {
     });
   }, [id]);
 
-  const handleMarkB = (id, val) => {
-    document.getElementById('b' + id + val).style.background = '#737373';
-    document.getElementById('b' + id + val).style.color = '#FFF';
-    document.getElementById('b' + id + val).disabled = true;
-  };
-  const handleMarkI = (id, val) => {
-    document.getElementById('i' + id + val).style.background = '#737373';
-    document.getElementById('i' + id + val).style.color = '#FFF';
-    document.getElementById('i' + id + val).disabled = true;
-  };
-  const handleMarkN = (id, val) => {
-    document.getElementById('n' + id + val).style.background = '#737373';
-    document.getElementById('n' + id + val).style.color = '#FFF';
-    document.getElementById('n' + id + val).disabled = true;
-  };
-  const handleMarkG = (id, val) => {
-    document.getElementById('g' + id + val).style.background = '#737373';
-    document.getElementById('g' + id + val).style.color = '#FFF';
-    document.getElementById('g' + id + val).disabled = true;
-  };
-  const handleMarkO = (id, val) => {
-    document.getElementById('o' + id + val).style.background = '#737373';
-    document.getElementById('o' + id + val).style.color = '#FFF';
-    document.getElementById('o' + id + val).disabled = true;
+  const handleMark = (letter, id, val) => {
+    document.getElementById(letter.toLowerCase() + id + val).style.background = '#737373';
+    document.getElementById(letter.toLowerCase() + id + val).style.color = '#FFF';
+    document.getElementById(letter.toLowerCase() + id + val).disabled = true;
   };
 
   return (
@@ -80,105 +61,35 @@ const PlayBingo = () => {
                       <Grid key={item.id} item lg={6} md={6} sm={6} xs={12}>
                         <center>
                           <h3 style={{ color: '#00adef' }}>00000{item.num}</h3>
-                          <ButtonGroup aria-label="Basic button group" orientation="vertical">
-                            <Button
-                              variant="contained"
-                              style={{ color: '#FFF', fontWeight: 'bold', height: 50, width: 50, borderRadius: 0 }}
-                            >
-                              B
-                            </Button>
-                            {item.b.map((i, key) => (
+                          {getLetters().map((letter) => (
+                            <ButtonGroup key={letter} aria-label="Basic button group" orientation="vertical">
                               <Button
-                                key={'b' + key}
-                                id={'b' + item.id + i}
-                                variant="outlined"
-                                style={{ height: 50, width: 50, borderRadius: 0 }}
-                                onClick={() => {
-                                  handleMarkB(item.id, i);
-                                }}
+                                variant="contained"
+                                style={{ color: '#FFF', fontWeight: 'bold', height: 50, width: 50, borderRadius: 0 }}
                               >
-                                {i}
+                                {letter}
                               </Button>
-                            ))}
-                          </ButtonGroup>
-                          <ButtonGroup aria-label="Basic button group" orientation="vertical">
-                            <Button variant="contained" style={{ color: '#FFF', height: 50, width: 50, borderRadius: 0 }}>
-                              I
-                            </Button>
-                            {item.i.map((i, key) => (
-                              <Button
-                                key={'i' + key}
-                                id={'i' + item.id + i}
-                                variant="outlined"
-                                style={{ height: 50, width: 50, borderRadius: 0 }}
-                                onClick={() => {
-                                  handleMarkI(item.id, i);
-                                }}
-                              >
-                                {i}
-                              </Button>
-                            ))}
-                          </ButtonGroup>
-                          <ButtonGroup aria-label="Basic button group" orientation="vertical">
-                            <Button variant="contained" style={{ color: '#FFF', height: 50, width: 50, borderRadius: 0 }}>
-                              N
-                            </Button>
-                            {item.n.map((i, key) =>
-                              i == 0 ? (
-                                <Button key={'n' + key} variant="contained" style={{ height: 50, width: 50, color: '#FFF' }}>
-                                  FREE
-                                </Button>
-                              ) : (
-                                <Button
-                                  key={'n' + key}
-                                  id={'n' + item.id + i}
-                                  variant="outlined"
-                                  style={{ height: 50, width: 50, borderRadius: 0 }}
-                                  onClick={() => {
-                                    handleMarkN(item.id, i);
-                                  }}
-                                >
-                                  {i}
-                                </Button>
-                              )
-                            )}
-                          </ButtonGroup>
-                          <ButtonGroup aria-label="Basic button group" orientation="vertical">
-                            <Button variant="contained" style={{ color: '#FFF', height: 50, width: 50, borderRadius: 0 }}>
-                              G
-                            </Button>
-                            {item.g.map((i, key) => (
-                              <Button
-                                key={'g' + key}
-                                id={'g' + item.id + i}
-                                variant="outlined"
-                                style={{ height: 50, width: 50, borderRadius: 0 }}
-                                onClick={() => {
-                                  handleMarkG(item.id, i);
-                                }}
-                              >
-                                {i}
-                              </Button>
-                            ))}
-                          </ButtonGroup>
-                          <ButtonGroup aria-label="Basic button group" orientation="vertical">
-                            <Button variant="contained" style={{ color: '#FFF', height: 50, width: 50, borderRadius: 0 }}>
-                              O
-                            </Button>
-                            {item.o.map((i, key) => (
-                              <Button
-                                key={'o' + key}
-                                id={'o' + item.id + i}
-                                variant="outlined"
-                                style={{ height: 50, width: 50, borderRadius: 0 }}
-                                onClick={() => {
-                                  handleMarkO(item.id, i);
-                                }}
-                              >
-                                {i}
-                              </Button>
-                            ))}
-                          </ButtonGroup>
+                              {item[letter.toLowerCase()].map((i, key) =>
+                                i === 'FREE' || i == 0 ? (
+                                  <Button key={letter + key} variant="contained" style={{ height: 50, width: 50, color: '#FFF' }}>
+                                    FREE
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    key={letter + key}
+                                    id={letter.toLowerCase() + item.id + i}
+                                    variant="outlined"
+                                    style={{ height: 50, width: 50, borderRadius: 0 }}
+                                    onClick={() => {
+                                      handleMark(letter, item.id, i);
+                                    }}
+                                  >
+                                    {i}
+                                  </Button>
+                                )
+                              )}
+                            </ButtonGroup>
+                          ))}
                         </center>
                       </Grid>
                     ))}

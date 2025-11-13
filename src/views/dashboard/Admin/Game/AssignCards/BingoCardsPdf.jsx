@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import logo1 from 'assets/images/marca_agua/logo-contrato.png';
 import logo2 from 'assets/images/marca_agua/logo-empresa.png';
+import { getLetters } from 'utils/bingoConfig';
 
 export const BingoCardsPdf = ({ bingoCards, event, user }) => {
   const pdfRef = useRef();
@@ -101,6 +102,8 @@ export const BingoCardsPdf = ({ bingoCards, event, user }) => {
       ...cardSize
     };
 
+    const letters = getLetters();
+
     return (
       <div
         key={index}
@@ -125,62 +128,24 @@ export const BingoCardsPdf = ({ bingoCards, event, user }) => {
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           {' '}
           {/* Center the bingo grid */}
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <Button variant="contained" style={{ backgroundColor: '#20a337', color: '#FFF', ...headerStyle }}>
-              B
-            </Button>
-            {bingoCard.b.map((item, key) => (
-              <Button key={'b' + key} variant="outlined" style={{ borderColor: '#ffee00', color: '#20a337', ...cardSize }}>
-                {item}
+          {letters.map((letter) => (
+            <div key={letter} style={{ display: 'flex', flexDirection: 'column' }}>
+              <Button variant="contained" style={{ backgroundColor: '#20a337', color: '#FFF', ...headerStyle }}>
+                {letter}
               </Button>
-            ))}
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <Button variant="contained" style={{ backgroundColor: '#20a337', color: '#FFF', ...headerStyle }}>
-              I
-            </Button>
-            {bingoCard.i.map((item, key) => (
-              <Button key={'i' + key} variant="outlined" style={{ borderColor: '#ffee00', color: '#20a337', ...cardSize }}>
-                {item}
-              </Button>
-            ))}
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <Button variant="contained" style={{ backgroundColor: '#20a337', color: '#FFF', ...headerStyle }}>
-              N
-            </Button>
-            {bingoCard.n.map((item, key) =>
-              item === 'FREE' ? (
-                <Button key={'n' + key} variant="contained" style={{ backgroundColor: '#ffee00', color: '#20a337', ...cardSize }}>
-                  F
-                </Button>
-              ) : (
-                <Button key={'n' + key} variant="outlined" style={{ borderColor: '#ffee00', color: '#20a337', ...cardSize }}>
-                  {item}
-                </Button>
-              )
-            )}
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <Button variant="contained" style={{ backgroundColor: '#20a337', color: '#FFF', ...headerStyle }}>
-              G
-            </Button>
-            {bingoCard.g.map((item, key) => (
-              <Button key={'g' + key} variant="outlined" style={{ borderColor: '#ffee00', color: '#20a337', ...cardSize }}>
-                {item}
-              </Button>
-            ))}
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <Button variant="contained" style={{ backgroundColor: '#20a337', color: '#FFF', ...headerStyle }}>
-              O
-            </Button>
-            {bingoCard.o.map((item, key) => (
-              <Button key={'o' + key} variant="outlined" style={{ borderColor: '#ffee00', color: '#20a337', ...cardSize }}>
-                {item}
-              </Button>
-            ))}
-          </div>
+              {bingoCard[letter.toLowerCase()].map((item, key) =>
+                item === 'FREE' ? (
+                  <Button key={letter + key} variant="contained" style={{ backgroundColor: '#ffee00', color: '#20a337', ...cardSize }}>
+                    F
+                  </Button>
+                ) : (
+                  <Button key={letter + key} variant="outlined" style={{ borderColor: '#ffee00', color: '#20a337', ...cardSize }}>
+                    {item}
+                  </Button>
+                )
+              )}
+            </div>
+          ))}
         </div>
         <div style={{ textAlign: 'center', fontSize: '10px', marginTop: '5px', color: '#666' }}>
           {' '}

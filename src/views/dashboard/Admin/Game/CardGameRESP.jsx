@@ -46,6 +46,7 @@ import MessageDark from 'components/message/MessageDark';
 import { titles } from './Game.texts';
 import { bingoValues, genConst } from 'store/constant';
 import { searchingCard, searchingGameData } from 'utils/search';
+import { getLetterConfig } from 'utils/bingoConfig';
 
 export default function CardGame() {
   const theme = useTheme();
@@ -217,11 +218,12 @@ export default function CardGame() {
   }
 
   function handleGetCard() {
-    generateBsection(bingoValues.B_START, bingoValues.B_END);
-    generateIsection(bingoValues.I_START, bingoValues.I_END);
-    generateNsection(bingoValues.N_START, bingoValues.N_END);
-    generateGsection(bingoValues.G_START, bingoValues.G_END);
-    generateOsection(bingoValues.O_START, bingoValues.O_END);
+    const config = getLetterConfig();
+    generateBsection(config.B.start, config.B.end);
+    generateIsection(config.I.start, config.I.end);
+    generateNsection(config.N.start, config.N.end);
+    generateGsection(config.G.start, config.G.end);
+    generateOsection(config.O.start, config.O.end);
     setShowCard(true);
   }
 
@@ -256,11 +258,12 @@ export default function CardGame() {
   function generateAndSaveCard(index) {
     setCardNumber(index + 1);
     idCard = generateId(10);
-    let array1 = generateBsection(bingoValues.B_START, bingoValues.B_END);
-    let array2 = generateIsection(bingoValues.I_START, bingoValues.I_END);
-    let array3 = generateNsection(bingoValues.N_START, bingoValues.N_END);
-    let array4 = generateGsection(bingoValues.G_START, bingoValues.G_END);
-    let array5 = generateOsection(bingoValues.O_START, bingoValues.O_END);
+    const config = getLetterConfig();
+    let array1 = generateBsection(config.B.start, config.B.end);
+    let array2 = generateIsection(config.I.start, config.I.end);
+    let array3 = generateNsection(config.N.start, config.N.end);
+    let array4 = generateGsection(config.G.start, config.G.end);
+    let array5 = generateOsection(config.O.start, config.O.end);
     cardBingoNumbers = [...array1, ...array2, ...array3, ...array4, ...array5];
     let object = {
       event: event,

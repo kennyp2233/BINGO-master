@@ -1,7 +1,7 @@
 {
   "name": "bingo",
   "slug": "bingo",
-  "version": "1.0.0",
+  "version": "1.0.1-20251113-162651",
   "private": true,
   "homepage": "",
   "dependencies": {
@@ -71,7 +71,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run version:bump && vite build",
+    "version:bump": "node version-bump.js",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "deploy": "npm run build && firebase deploy --only hosting"

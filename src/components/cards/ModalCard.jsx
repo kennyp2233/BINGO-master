@@ -6,6 +6,7 @@ import { IconCircleX, IconEye } from '@tabler/icons';
 import { titles } from 'views/dashboard/Admin/Game/Game.texts';
 import { uiStyles } from 'views/dashboard/Admin/Game/Game.styles';
 import { genConst } from 'store/constant';
+import { getLetters } from 'utils/bingoConfig';
 
 export const ModalCard = ({ bingoCard }) => {
   const [openCard, setOpenCard] = useState(false);
@@ -35,62 +36,24 @@ export const ModalCard = ({ bingoCard }) => {
           </Typography>
           <div style={{ marginTop: 20 }}>
             <center>
-              <ButtonGroup aria-label="Basic button group" orientation="vertical">
-                <Button variant="contained" style={{ color: '#FFF', fontWeight: 'bold', height: 55, width: 55, borderRadius: 0 }}>
-                  B
-                </Button>
-                {bingoCard.b.map((item, key) => (
-                  <Button key={'b' + key} variant="outlined" style={{ height: 55, width: 55, borderRadius: 0 }}>
-                    {item}
+              {getLetters().map((letter) => (
+                <ButtonGroup key={letter} aria-label="Basic button group" orientation="vertical">
+                  <Button variant="contained" style={{ color: '#FFF', fontWeight: 'bold', height: 55, width: 55, borderRadius: 0 }}>
+                    {letter}
                   </Button>
-                ))}
-              </ButtonGroup>
-              <ButtonGroup aria-label="Basic button group" orientation="vertical">
-                <Button variant="contained" style={{ color: '#FFF', height: 55, width: 55, borderRadius: 0 }}>
-                  I
-                </Button>
-                {bingoCard.i.map((item, key) => (
-                  <Button key={'i' + key} variant="outlined" style={{ height: 55, width: 55, borderRadius: 0 }}>
-                    {item}
-                  </Button>
-                ))}
-              </ButtonGroup>
-              <ButtonGroup aria-label="Basic button group" orientation="vertical">
-                <Button variant="contained" style={{ color: '#FFF', height: 55, width: 55, borderRadius: 0 }}>
-                  N
-                </Button>
-                {bingoCard.n.map((item, key) =>
-                  item === 'FREE' ? (
-                    <Button key={'n' + key} variant="contained" style={{ height: 55, width: 55, color: '#FFF', borderRadius: 0 }}>
-                      FREE
-                    </Button>
-                  ) : (
-                    <Button key={'n' + key} variant="outlined" style={{ height: 55, width: 55, borderRadius: 0 }}>
-                      {item}
-                    </Button>
-                  )
-                )}
-              </ButtonGroup>
-              <ButtonGroup aria-label="Basic button group" orientation="vertical">
-                <Button variant="contained" style={{ color: '#FFF', height: 55, width: 55, borderRadius: 0 }}>
-                  G
-                </Button>
-                {bingoCard.g.map((item, key) => (
-                  <Button key={'g' + key} variant="outlined" style={{ height: 55, width: 55, borderRadius: 0 }}>
-                    {item}
-                  </Button>
-                ))}
-              </ButtonGroup>
-              <ButtonGroup aria-label="Basic button group" orientation="vertical">
-                <Button variant="contained" style={{ color: '#FFF', height: 55, width: 55, borderRadius: 0 }}>
-                  O
-                </Button>
-                {bingoCard.o.map((item, key) => (
-                  <Button key={'o' + key} variant="outlined" style={{ height: 55, width: 55, borderRadius: 0 }}>
-                    {item}
-                  </Button>
-                ))}
-              </ButtonGroup>
+                  {bingoCard[letter.toLowerCase()].map((item, key) =>
+                    item === 'FREE' ? (
+                      <Button key={letter + key} variant="contained" style={{ height: 55, width: 55, color: '#FFF', borderRadius: 0 }}>
+                        FREE
+                      </Button>
+                    ) : (
+                      <Button key={letter + key} variant="outlined" style={{ height: 55, width: 55, borderRadius: 0 }}>
+                        {item}
+                      </Button>
+                    )
+                  )}
+                </ButtonGroup>
+              ))}
             </center>
           </div>
           <Grid container style={{ marginTop: 20 }}>
