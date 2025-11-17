@@ -35,9 +35,12 @@ export function renderBingoCard(pdf, card, x, y, logo1Base64, logo2Base64) {
   const cardNumberWidth = pdf.getTextWidth(cardNumberText);
   pdf.text(cardNumberText, x + (CARD.WIDTH / 2) - (cardNumberWidth / 2), y + CARD.PADDING + 4);
 
-  // 3. Draw BINGO grid
+  // 3. Draw BINGO grid (centered)
   const gridStartY = y + CARD.PADDING + 8;
-  renderBingoGrid(pdf, card, x + CARD.PADDING, gridStartY);
+  const gridWidth = CELL.SIZE * 5; // 5 columns
+  const availableWidth = CARD.WIDTH - (CARD.PADDING * 2);
+  const gridOffsetX = (availableWidth - gridWidth) / 2;
+  renderBingoGrid(pdf, card, x + CARD.PADDING + gridOffsetX, gridStartY);
 
   // 4. Draw card ID at bottom
   pdf.setFont(FONTS.REGULAR, FONTS.STYLES.NORMAL);
