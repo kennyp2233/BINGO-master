@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from '@mui/material';
 
 import PayPhoneIcon from 'assets/images/icons/payphone_icon.png';
-import PayphoneBox from './PayphoneBox';
+import PayphoneBox from './PayPhoneBox';
 import CustomModal from 'components/Modal';
 
 const PayPhoneButton = (props) => {
