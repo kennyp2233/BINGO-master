@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from 'react';
 import { getUserCardsPaginated, getUserData, getUserName } from 'config/firebaseEvents';
 import { useTheme } from '@emotion/react';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import { BingoCardsPdf } from '../Game/AssignCards/BingoCardsPdf';
+import { BingoPDFButton } from 'modules/features/bingo-pdf';
 
 const UsersCards = () => {
   const { userId } = useParams();
@@ -102,7 +102,7 @@ const UsersCards = () => {
           <Typography variant="h6" sx={{ mb: 2 }}>
             Generar PDF con las cartillas de {user?.fullName || userId}
           </Typography>
-          <BingoCardsPdf bingoCards={selectedItems} event={mockEvent} user={user} />
+          <BingoPDFButton bingoCards={selectedItems} event={mockEvent} user={user} />
         </Box>
       )}
 

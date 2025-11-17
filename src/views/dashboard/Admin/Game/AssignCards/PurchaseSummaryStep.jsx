@@ -8,7 +8,7 @@ import { generateId } from 'utils/idGenerator';
 import { fullDate } from 'utils/validations';
 import { createDocument, updateDocument } from 'config/firebaseEvents';
 import { collCards, collUserCards, collPayments } from 'store/collections';
-import { BingoCardsPdf } from './BingoCardsPdf';
+import { BingoPDFButton } from 'modules/features/bingo-pdf';
 
 export const PurchaseSummaryStep = (props) => {
   const { selectedItems, event, user, finishAssign, setFinishAssign, handleResetSteps } = props;
@@ -138,7 +138,7 @@ export const PurchaseSummaryStep = (props) => {
           <Button variant="contained" onClick={handleResetSteps} color="primary" style={{ color: '#FFF' }}>
             Finalizar Asignación
           </Button>
-          <BingoCardsPdf bingoCards={selectedItems} event={event} user={user} />
+          <BingoPDFButton bingoCards={selectedItems} event={event} user={user} />
         </Box>
       ) : (
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
