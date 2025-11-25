@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Box, Button, ButtonGroup, Grid, Modal, Typography } from '@mui/material';
 import { IconCircleX, IconEye } from '@tabler/icons';
 
-import { titles } from 'views/dashboard/Admin/Game/Game.texts';
-import { uiStyles } from 'views/dashboard/Admin/Game/Game.styles';
+import { titles, uiStyles } from 'modules/features/admin/cards';
 import { genConst } from 'store/constant';
 import { getLetters } from 'utils/bingoConfig';
 

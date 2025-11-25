@@ -45,7 +45,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { fullDate, generateDate } from 'utils/validations';
 import { genConst } from 'store/constant';
 import { collUsers, collNotifications } from 'store/collections';
-import { createDocument, createLog } from 'config/firebaseEvents';
+import { createDocument, createLog } from 'modules/shared';
 import { generateId } from 'utils/idGenerator';
 
 const AuthRegister = ({ ...others }) => {

@@ -14,7 +14,7 @@ import google from 'assets/images/google.webp';
 // Firebase Google Provider
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { genConst } from 'store/constant';
-import { createDocument, getProfileUser, isExistUser } from 'config/firebaseEvents';
+import { createDocument, getProfileUser, isExistUser } from 'modules/shared';
 import { collUsers } from 'store/collections';
 // Notifications
 import { ToastContainer, toast } from 'react-toastify';

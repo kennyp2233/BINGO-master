@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from 'react';
 import { getUserCardsPaginated, getUserData, getUserName } from 'config/firebaseEvents';
 import { useTheme } from '@emotion/react';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import { BingoPDFButton } from 'modules/features/bingo-pdf';
+import { BingoPDFButton } from 'modules/features/admin/bingo-pdf';
 
 const UsersCards = () => {
   const { userId } = useParams();

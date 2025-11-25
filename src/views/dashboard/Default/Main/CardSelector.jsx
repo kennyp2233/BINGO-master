@@ -16,7 +16,7 @@ import StateTickets from 'components/StateTickets';
 import BingoCard from 'components/bingo/BingoCard';
 import CustomModal from 'components/Modal';
 import ItemBingo from 'components/bingo/ItemBingo';
-import PayPhoneButton from './PayphoneButton';
+import { PayphoneButton } from 'modules/features/default/payment';
 import TermsModal from './TermsModal';
 
 const CardSelector = () => {
@@ -368,7 +368,7 @@ const CardSelector = () => {
                       ))}
                     </Grid>
                     <center>
-                      <PayPhoneButton
+                      <PayphoneButton
                         totalValue={totalToPay}
                         invoiceData={invoiceData}
                         disabled={!isPaymentAllowed()}

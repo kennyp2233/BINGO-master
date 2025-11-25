@@ -3,10 +3,10 @@ import React, { lazy, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
-// routing
+
+// project imports
 import config from './config';
 import themes from 'themes';
-// project imports layouts
 import Loadable from 'components/Loadable';
 import MinimalLayout from 'layout/MinimalLayout';
 import MainLayout from 'layout/MainLayout';
@@ -14,60 +14,62 @@ import AdminBingoLayout from 'layout/AdminBingoLayout';
 import HomeLayout from 'layout/HomeLayout';
 import DefaultLayout from 'layout/DefaultLayout';
 import { genConst } from 'store/constant';
-//Firebase
+
+// Firebase
 import { onAuthStateChanged } from 'firebase/auth';
 import { authentication } from 'config/firebase';
-import { getProfileUser } from 'config/firebaseEvents';
+import { getProfileUser } from 'modules/shared/services/firebaseCommon';
+
+// Toast
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Main Portal
 const Home = Loadable(lazy(() => import('views/home/Home')));
+
 // Error
 const NotFound = Loadable(lazy(() => import('views/pages/error/NotFound')));
+
 // dashboard Admin
-const DashboardAdmin = Loadable(lazy(() => import('views/dashboard/Admin')));
-// dashboard Profile
-const UserProfile = Loadable(lazy(() => import('views/dashboard/Admin/Profile/UserProfile')));
-const UserSecurity = Loadable(lazy(() => import('views/dashboard/Admin/Profile/UserSecurity')));
-// dashboard Mail
-//const Mail = Loadable(lazy(() => import('views/dashboard/Admin/Mail/Mail')));
-// dashboard Users
 const AdminUsers = Loadable(lazy(() => import('views/dashboard/Admin/AdminUsers/AdminUsers')));
-const Users = Loadable(lazy(() => import('views/dashboard/Admin/Users/Users')));
-const UsersCards = Loadable(lazy(() => import('views/dashboard/Admin/Users/UsersCards')));
-const Payments = Loadable(lazy(() => import('views/dashboard/Admin/Payments/Payments')));
-// dashboard Settings
-const Share = Loadable(lazy(() => import('views/dashboard/Admin/Share/Share')));
-const Settings = Loadable(lazy(() => import('views/dashboard/Admin/Settings/Settings')));
+const DashboardAdmin = Loadable(lazy(() => import('views/dashboard/Admin')));
 const Logs = Loadable(lazy(() => import('views/dashboard/Admin/Logs/Logs')));
 const Notifications = Loadable(lazy(() => import('views/dashboard/Admin/Notifications/Notifications')));
-//Game
-const Game = Loadable(lazy(() => import('views/dashboard/Admin/Game/board/Game')));
-const NewGame = Loadable(lazy(() => import('views/dashboard/Admin/Game/NewGame')));
-const GameUsers = Loadable(lazy(() => import('views/dashboard/Admin/Game/GameUsers')));
-const CardGame = Loadable(lazy(() => import('views/dashboard/Admin/Game/CardGame')));
-const CardsByGame = Loadable(lazy(() => import('views/dashboard/Admin/Game/CardsByGame')));
-const StatsCardGame = Loadable(lazy(() => import('views/dashboard/Admin/Game/StatsCardGame')));
-const CardsUser = Loadable(lazy(() => import('views/dashboard/Admin/Game/AssignCards/CardsUser')));
-//DEFAULT SECTION ====================================================
+const Payments = Loadable(lazy(() => import('views/dashboard/Admin/Payments/Payments')));
+const Settings = Loadable(lazy(() => import('views/dashboard/Admin/Settings/Settings')));
+const Share = Loadable(lazy(() => import('views/dashboard/Admin/Share/Share')));
+const UserProfile = Loadable(lazy(() => import('views/dashboard/Admin/Profile/UserProfile')));
+const UserSecurity = Loadable(lazy(() => import('views/dashboard/Admin/Profile/UserSecurity')));
+const Users = Loadable(lazy(() => import('views/dashboard/Admin/Users/Users')));
+const UsersCards = Loadable(lazy(() => import('views/dashboard/Admin/Users/UsersCards')));
+
+// Game
+const CardGame = Loadable(lazy(() => import('modules/features/admin/cards').then(module => ({ default: module.CardGame }))));
+const CardsByGame = Loadable(lazy(() => import('modules/features/admin/cards').then(module => ({ default: module.CardsByGame }))));
+const CardsUser = Loadable(lazy(() => import('modules/features/admin/card-assignment').then(module => ({ default: module.CardsUser }))));
+const Game = Loadable(lazy(() => import('modules/features/admin/game').then(module => ({ default: module.Game }))));
+const GameUsers = Loadable(lazy(() => import('modules/features/admin/events').then(module => ({ default: module.GameUsers }))));
+const NewGame = Loadable(lazy(() => import('modules/features/admin/events').then(module => ({ default: module.NewGame }))));
+const StatsCardGame = Loadable(lazy(() => import('modules/features/admin/cards').then(module => ({ default: module.StatsCardGame }))));
+
 // default Login
+const AuthRecovery = Loadable(lazy(() => import('views/pages/login/login/PasswordRecover')));
 const AuthSignin = Loadable(lazy(() => import('views/pages/login/login/Signin')));
 const AuthSignup = Loadable(lazy(() => import('views/pages/login/login/Signup')));
-const AuthRecovery = Loadable(lazy(() => import('views/pages/login/login/PasswordRecover')));
+
 // dashboard Default
-const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
-const CardSelectorDefault = Loadable(lazy(() => import('views/dashboard/Default/Main/CardSelector')));
-const PlayBingo = Loadable(lazy(() => import('views/dashboard/Default/Main/PlayBingo')));
-const MyTickets = Loadable(lazy(() => import('views/dashboard/Default/MyTickets/MyTickets')));
-const ConfirmationBuy = Loadable(lazy(() => import('views/dashboard/Default/Main/ConfirmationBuy')));
-// dashboard Profile
-const UserProfileDefault = Loadable(lazy(() => import('views/dashboard/Default/Profile/UserProfile')));
-const UserSecurityDefault = Loadable(lazy(() => import('views/dashboard/Default/Profile/UserSecurity')));
-// dashboard Settings
-const ShareDefault = Loadable(lazy(() => import('views/dashboard/Default/Share/Share')));
-const NotificationsDefault = Loadable(lazy(() => import('views/dashboard/Default/Notifications/Notifications')));
-const Success = Loadable(lazy(() => import('views/dashboard/Default/Response/Success')));
-const Failure = Loadable(lazy(() => import('views/dashboard/Default/Response/Failure')));
-const PaymentResponse = Loadable(lazy(() => import('views/dashboard/Default/Payment/PaymentResponse')));
+const CardSelectorDefault = Loadable(lazy(() => import('modules/features/default/main/components/CardSelector')));
+const ConfirmationBuy = Loadable(lazy(() => import('modules/features/default/payment')));
+const DashboardDefault = Loadable(lazy(() => import('modules/features/default/dashboard/components/Dashboard')));
+const Failure = Loadable(lazy(() => import('modules/features/default/response/components/Failure')));
+const MyTickets = Loadable(lazy(() => import('modules/features/default/tickets/components/MyTickets')));
+const NotificationsDefault = Loadable(lazy(() => import('modules/features/default/notifications/components/Notifications')));
+const PaymentResponse = Loadable(lazy(() => import('modules/features/default/payment/common/components/PaymentResponse')));
+const PlayBingo = Loadable(lazy(() => import('modules/features/default/main/components/PlayBingo')));
+const ShareDefault = Loadable(lazy(() => import('modules/features/default/share/components/Share')));
+const Success = Loadable(lazy(() => import('modules/features/default/response/components/Success')));
+const UserProfileDefault = Loadable(lazy(() => import('modules/features/default/profile/components/UserProfile')));
+const UserSecurityDefault = Loadable(lazy(() => import('modules/features/default/profile/components/UserSecurity')));
 
 const App = () => {
   const customization = useSelector((state) => state.customization);
@@ -85,6 +87,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={themes(customization)}>
+      <ToastContainer />
       <Router basename={config.basename}>
         <Routes>
           <Route element={<HomeLayout />} path="/" exact>

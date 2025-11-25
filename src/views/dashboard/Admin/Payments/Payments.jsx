@@ -28,8 +28,8 @@ import {
 import CircularProgress from '@mui/material/CircularProgress';
 import MessageDark from 'components/message/MessageDark';
 import { IconTrash, IconEdit, IconCircleX, IconPencil, IconReload, IconSearch, IconPlus, IconHomeDollar } from '@tabler/icons';
-//Firebase Events
-import { createDocument, getPaymentsListPaginated, getTotalPaidBenefit, updateDocument } from 'config/firebaseEvents';
+import { createDocument, updateDocument } from 'modules/shared';
+import { getPaymentsListPaginated, getTotalPaidBenefit } from 'modules/features/default/payment';
 //Notifications
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

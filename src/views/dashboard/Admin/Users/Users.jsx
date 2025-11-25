@@ -31,7 +31,8 @@ import User1 from 'assets/images/profile/profile-picture-6.jpg';
 import MessageDark from 'components/message/MessageDark';
 import { IconTrash, IconEdit, IconCircleX, IconPencil, IconReload, IconUserCircle, IconSearch, IconFileAnalytics } from '@tabler/icons';
 //Firebase Events
-import { createDocument, getUsersListPaginated, updateDocument } from 'config/firebaseEvents';
+import { createDocument, updateDocument } from 'config/firebaseEvents';
+import { getUsersListPaginated } from 'modules/features/admin/users';
 //Notifications
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
