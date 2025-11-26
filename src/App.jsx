@@ -98,14 +98,18 @@ const App = () => {
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    onAuthStateChanged(authentication, (user) => {
+    const unsubscribe = onAuthStateChanged(authentication, (user) => {
       if (user) {
         getProfileUser(user.uid).then((pro) => {
           setProfile(pro);
         });
+      } else {
+        setProfile(null);
       }
     });
-  }, [profile]);
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <ThemeProvider theme={themes(customization)}>

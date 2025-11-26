@@ -1,11 +1,11 @@
-import { Grid, Typography, Stack, Pagination } from '@mui/material';
+import { Box, Typography, Stack, Pagination } from '@mui/material';
 
 const CardPagination = ({ totalPages, page, handlePageChange, loading, checkingAvailability }) => {
     if (totalPages <= 1) return null;
 
     return (
-        <Grid item xs={12} sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Typography variant="body2" sx={{ mb: 1, color: '#fff' }}>
+        <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+            <Typography variant="body2" sx={{ mb: 1, color: theme => theme.palette.text.secondary }}>
                 Página {page + 1} de {totalPages}
             </Typography>
             <Stack spacing={2}>
@@ -19,7 +19,7 @@ const CardPagination = ({ totalPages, page, handlePageChange, loading, checkingA
                     disabled={loading || checkingAvailability}
                 />
             </Stack>
-        </Grid>
+        </Box>
     );
 };
 

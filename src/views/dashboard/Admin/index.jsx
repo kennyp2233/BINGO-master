@@ -3,36 +3,33 @@ import { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 // data
 import { gridSpacing } from 'store/constant';
-//Firebase
-import { countAdminUser, countCards, countGames, countUser, getTotalPaidBenefit } from 'config/firebaseEvents';
+// Services
+import { getDashboardStats } from 'modules/features/admin/dashboard/services';
 //Components
 import TotalCard from 'components/cards/TotalCard';
 import TotalYellowCard from 'components/cards/TotalYellowCard';
 import EarningBlueCard from 'components/cards/EarningBlueCard';
 
 const Dashboard = () => {
-  const [totalUsers, setTotalUsers] = useState(null);
-  const [totalAdminUsers, setTotalAdminUsers] = useState(null);
-  const [totalCards, setTotalCards] = useState(null);
-  const [totalGames, setTotalGames] = useState(null);
-  const [totalIncomes, setTotalIncomes] = useState(null);
+  const [stats, setStats] = useState({
+    users: null,
+    admins: null,
+    cards: null,
+    games: null,
+    incomes: null
+  });
 
   useEffect(() => {
-    countUser().then((count) => {
-      setTotalUsers(count);
-    });
-    countAdminUser().then((count) => {
-      setTotalAdminUsers(count);
-    });
-    countCards().then((count) => {
-      setTotalCards(count);
-    });
-    countGames().then((count) => {
-      setTotalGames(count);
-    });
-    getTotalPaidBenefit({ statusCode: 3 }).then((total) => {
-      setTotalIncomes(Number.parseFloat(total).toFixed(2));
-    });
+    const fetchData = async () => {
+      try {
+        const dashboardStats = await getDashboardStats();
+        setStats(dashboardStats);
+      } catch (error) {
+        console.error('Error loading dashboard:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -40,19 +37,19 @@ const Dashboard = () => {
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item sm={6} xs={6} md={6} lg={3}>
-            <TotalCard total={totalUsers} detail="Usuarios" />
+            <TotalCard total={stats.users} detail="Usuarios" />
           </Grid>
           <Grid item sm={6} xs={6} md={6} lg={3}>
-            <TotalCard total={totalAdminUsers} detail="Administradores" />
+            <TotalCard total={stats.admins} detail="Administradores" />
           </Grid>
           <Grid item sm={6} xs={6} md={6} lg={3}>
-            <TotalYellowCard total={totalGames} detail="Eventos" />
+            <TotalYellowCard total={stats.games} detail="Eventos" />
           </Grid>
           <Grid item sm={6} xs={6} md={6} lg={3}>
-            <TotalYellowCard total={totalCards} detail="Cartillas" />
+            <TotalYellowCard total={stats.cards} detail="Cartillas" />
           </Grid>
           <Grid item lg={3} md={6} sm={6} xs={6}>
-            <EarningBlueCard total={totalIncomes} detail="Ingresos" />
+            <EarningBlueCard total={stats.incomes} detail="Ingresos" />
           </Grid>
         </Grid>
       </Grid>

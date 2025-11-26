@@ -3,7 +3,7 @@ import { IconCheck } from '@tabler/icons';
 
 const CardGrid = ({ cards, loading, checkingAvailability, isCardSelected, handleSelect, theme }) => {
     return (
-        <Box sx={{ width: '100%', height: '100%', p: 2 }}>
+        <Box sx={{ width: '100%', p: 2 }}>
             {loading ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center', p: 5 }}>
                     <CircularProgress size={60} thickness={4} sx={{ color: '#00adef' }} />
