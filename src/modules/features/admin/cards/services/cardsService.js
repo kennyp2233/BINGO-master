@@ -7,22 +7,22 @@ const eventCardCountCache = new Map();
 const paginationCursors = new Map(); // Cache para cursores de paginación
 
 export const returnCard = async (eventId, cardId) => {
-    const cardQuery = query(collection(db, collCards), where('event', '==', eventId), where('id', '==', cardId));
-    const querySnapshot = await getDocs(cardQuery);
+  const cardQuery = query(collection(db, collCards), where('event', '==', eventId), where('id', '==', cardId));
+  const querySnapshot = await getDocs(cardQuery);
 
-    if (querySnapshot.empty) {
-        throw new Error('La cartilla no existe en este evento.');
-    }
+  if (querySnapshot.empty) {
+    throw new Error('La cartilla no existe en este evento.');
+  }
 
-    const cardDoc = querySnapshot.docs[0];
-    const cardData = cardDoc.data();
+  const cardDoc = querySnapshot.docs[0];
+  const cardData = cardDoc.data();
 
-    if (cardData.state === 2) {
-        throw new Error('Esta cartilla ya ha sido devuelta.');
-    }
+  if (cardData.state === 2) {
+    throw new Error('Esta cartilla ya ha sido devuelta.');
+  }
 
-    await updateDoc(cardDoc.ref, { state: 2 });
-    clearCardsPaginationCache(eventId);
+  await updateDoc(cardDoc.ref, { state: 2 });
+  clearCardsPaginationCache(eventId);
 };
 
 /**
@@ -32,22 +32,22 @@ export const returnCard = async (eventId, cardId) => {
  * @returns {Promise<void>}
  */
 export const returnCardByOrder = async (eventId, cardOrder) => {
-    const cardQuery = query(collection(db, collCards), where('event', '==', eventId), where('order', '==', cardOrder));
-    const querySnapshot = await getDocs(cardQuery);
+  const cardQuery = query(collection(db, collCards), where('event', '==', eventId), where('order', '==', cardOrder));
+  const querySnapshot = await getDocs(cardQuery);
 
-    if (querySnapshot.empty) {
-        throw new Error(`La cartilla número ${cardOrder} no existe en este evento.`);
-    }
+  if (querySnapshot.empty) {
+    throw new Error(`La cartilla número ${cardOrder} no existe en este evento.`);
+  }
 
-    const cardDoc = querySnapshot.docs[0];
-    const cardData = cardDoc.data();
+  const cardDoc = querySnapshot.docs[0];
+  const cardData = cardDoc.data();
 
-    if (cardData.state === 2) {
-        throw new Error(`La cartilla número ${cardOrder} ya ha sido devuelta.`);
-    }
+  if (cardData.state === 2) {
+    throw new Error(`La cartilla número ${cardOrder} ya ha sido devuelta.`);
+  }
 
-    await updateDoc(cardDoc.ref, { state: 2 });
-    clearCardsPaginationCache(eventId);
+  await updateDoc(cardDoc.ref, { state: 2 });
+  clearCardsPaginationCache(eventId);
 };
 
 /**
@@ -263,8 +263,11 @@ export const checkCardAvailability = async (cardId) => {
 
     const cardData = querySnapshot.docs[0].data();
 
-    // Verificar si la cartilla está disponible (state == 1)
-    if (cardData.state !== 1) {
+    // Verificar si la cartilla está disponible (state == 1 o state == 2 para devueltas)
+    // Estado 0 = No disponible (asignada)
+    // Estado 1 = Disponible
+    // Estado 2 = Devuelta (tratada como disponible para jugadores)
+    if (cardData.state !== 1 && cardData.state !== 2) {
       return {
         available: false,
         message: 'Esta cartilla ya ha sido tomada por otro usuario',
@@ -332,5 +335,30 @@ export const clearCardsPaginationCache = (eventId = null, stateFilter = null) =>
     // Limpiar todo el cache
     eventCardCountCache.clear();
     paginationCursors.clear();
+  }
+};
+
+/**
+ * Verifica si un evento está agotado (sin cartillas disponibles)
+ * @param {string} eventId - ID del evento
+ * @returns {Promise<boolean>} True si está agotado
+ */
+export const checkEventSoldOut = async (eventId) => {
+  try {
+    // Contar cartillas con estado 1 (disponible) o 2 (devuelta)
+    const q = query(
+      collection(db, collCards),
+      where('event', '==', eventId),
+      where('state', 'in', [1, 2])
+    );
+
+    // Usar getCountFromServer es mucho más eficiente y barato que getDocs
+    const snapshot = await getCountFromServer(q);
+    const count = snapshot.data().count;
+
+    return count === 0;
+  } catch (error) {
+    console.error('Error checking sold out status:', error);
+    return false; // Asumir no agotado en caso de error para no bloquear
   }
 };

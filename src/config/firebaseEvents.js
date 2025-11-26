@@ -51,7 +51,9 @@ export function isSessionActive(navigate) {
         }
       });
     } else {
-      navigate('/auth/signin');
+      if (window.location.pathname !== '/auth/signin') {
+        navigate('/auth/signin');
+      }
     }
   });
 }

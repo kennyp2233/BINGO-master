@@ -160,7 +160,7 @@ export const SelectCardStep = ({ event, selectedItems, setSelectedItems }) => {
 
   return (
     <Grid container direction="column">
-      <StateTickets />
+      <StateTickets showReturnedState={true} />
       <Grid container alignItems="center" spacing={2} mb={2}>
         <Grid item xs={6} md={4}>
           <FormControl fullWidth size="small">

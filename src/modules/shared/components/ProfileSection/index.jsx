@@ -18,6 +18,7 @@ import {
   Paper,
   Popper,
   Stack,
+  Tooltip,
   Typography
 } from '@mui/material';
 
@@ -34,7 +35,7 @@ import Transitions from 'components/extended/Transitions';
 import User1 from 'assets/images/profile/profile-picture-6.jpg';
 
 // assets
-import { IconLogout, IconSettings, IconUser, IconLock } from '@tabler/icons';
+import { IconLogout, IconUser, IconLock } from '@tabler/icons';
 
 // ==============================|| PROFILE MENU ||============================== //
 
@@ -59,7 +60,7 @@ const ProfileSection = () => {
   const handleLogout = async () => {
     signOut(auth)
       .then(() => {
-        navigate('/auth/signin');
+        navigate('/');
       })
       .catch((error) => {
         console.log(error);
@@ -72,6 +73,7 @@ const ProfileSection = () => {
     }
     setOpen(false);
   };
+
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -86,48 +88,49 @@ const ProfileSection = () => {
 
   return (
     <>
-      <Chip
-        sx={{
-          height: '48px',
-          alignItems: 'center',
-          borderRadius: '27px',
-          transition: 'all .2s ease-in-out',
-          borderColor: theme.palette.primary.light,
-          backgroundColor: theme.palette.primary.light,
-          '&[aria-controls="menu-list-grow"], &:hover': {
-            borderColor: theme.palette.primary.main,
-            background: `${theme.palette.primary.main}!important`,
-            color: theme.palette.primary.light,
-            '& svg': {
-              stroke: theme.palette.primary.light
+      <Tooltip title="Perfil">
+        <Chip
+          sx={{
+            width: '48px',
+            height: '48px',
+            alignItems: 'center',
+            borderRadius: '27px',
+            transition: 'all .2s ease-in-out',
+            borderColor: theme.palette.primary.light,
+            backgroundColor: theme.palette.primary.light,
+            '&[aria-controls="menu-list-grow"], &:hover': {
+              borderColor: theme.palette.primary.main,
+              background: `${theme.palette.primary.main}!important`,
+              color: theme.palette.primary.light,
+              '& svg': {
+                stroke: theme.palette.primary.light
+              }
+            },
+            '& .MuiChip-label': {
+              lineHeight: 0
             }
-          },
-          '& .MuiChip-label': {
-            lineHeight: 0
+          }}
+          icon={
+            <Avatar
+              src={photoURL || User1}
+              sx={{
+                margin: '8px 0 8px 21px !important',
+                cursor: 'pointer'
+              }}
+              ref={anchorRef}
+              aria-controls={open ? 'menu-list-grow' : undefined}
+              aria-haspopup="true"
+              color="inherit"
+            />
           }
-        }}
-        icon={
-          <Avatar
-            src={photoURL || User1}
-            sx={{
-              ...theme.typography.mediumAvatar,
-              margin: '8px 0 8px 8px !important',
-              cursor: 'pointer'
-            }}
-            ref={anchorRef}
-            aria-controls={open ? 'menu-list-grow' : undefined}
-            aria-haspopup="true"
-            color="inherit"
-          />
-        }
-        label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
-        variant="outlined"
-        ref={anchorRef}
-        aria-controls={open ? 'menu-list-grow' : undefined}
-        aria-haspopup="true"
-        onClick={handleToggle}
-        color="primary"
-      />
+          variant="outlined"
+          ref={anchorRef}
+          aria-controls={open ? 'menu-list-grow' : undefined}
+          aria-haspopup="true"
+          onClick={handleToggle}
+          color="primary"
+        />
+      </Tooltip>
       <Popper
         placement="bottom-end"
         open={open}
@@ -178,15 +181,15 @@ const ProfileSection = () => {
                           }
                         }}
                       >
-                        <Link to="user-profile" style={{ textDecoration: 'none' }}>
+                        <Link to="/app/user-profile" style={{ textDecoration: 'none' }}>
                           <ListItemButton sx={{ borderRadius: `${customization.borderRadius}px` }} onClick={handleClose}>
                             <ListItemIcon>
                               <IconUser stroke={1.5} size="1.3rem" />
                             </ListItemIcon>
-                            <ListItemText primary={<Typography variant="body2">Administrar Cuenta</Typography>} />
+                            <ListItemText primary={<Typography variant="body2">Cuenta</Typography>} />
                           </ListItemButton>
                         </Link>
-                        <Link to="user-security" style={{ textDecoration: 'none' }}>
+                        <Link to="/app/user-security" style={{ textDecoration: 'none' }}>
                           <ListItemButton sx={{ borderRadius: `${customization.borderRadius}px` }} onClick={handleClose}>
                             <ListItemIcon>
                               <IconLock stroke={1.5} size="1.3rem" />

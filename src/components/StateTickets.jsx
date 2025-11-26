@@ -1,7 +1,8 @@
 import React from 'react';
 import { Grid, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 
-function StateTickets() {
+function StateTickets({ showReturnedState = false }) {
   return (
     <div>
       <div style={{ margin: 10 }}>
@@ -18,9 +19,11 @@ function StateTickets() {
                 <Grid item lg={3} md={3} sm={3}>
                   <div style={{ width: 20, height: 10, backgroundColor: '#525252', borderRadius: 5 }}></div>
                 </Grid>
-                <Grid item lg={3} md={3} sm={3}>
-                  <div style={{ width: 20, height: 10, backgroundColor: '#ff6b35', borderRadius: 5 }}></div>
-                </Grid>
+                {showReturnedState && (
+                  <Grid item lg={3} md={3} sm={3}>
+                    <div style={{ width: 20, height: 10, backgroundColor: '#ff6b35', borderRadius: 5 }}></div>
+                  </Grid>
+                )}
                 <Grid item lg={3} md={3} sm={3}>
                   <Typography id="modal-modal-title" variant="h6" component="h6" align="center" color={'#000'}>
                     Disponible
@@ -36,11 +39,13 @@ function StateTickets() {
                     Asignada
                   </Typography>
                 </Grid>
-                <Grid item lg={3} md={3} sm={3}>
-                  <Typography id="modal-modal-title" variant="h6" component="h6" align="center" color={'#000'}>
-                    Devuelta
-                  </Typography>
-                </Grid>
+                {showReturnedState && (
+                  <Grid item lg={3} md={3} sm={3}>
+                    <Typography id="modal-modal-title" variant="h6" component="h6" align="center" color={'#000'}>
+                      Devuelta
+                    </Typography>
+                  </Grid>
+                )}
               </Grid>
             </Grid>
           </Grid>
@@ -49,5 +54,9 @@ function StateTickets() {
     </div>
   );
 }
+
+StateTickets.propTypes = {
+  showReturnedState: PropTypes.bool
+};
 
 export default StateTickets;

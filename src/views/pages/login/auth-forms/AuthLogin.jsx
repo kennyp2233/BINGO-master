@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation, createSearchParams } from 'react-router-dom';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -39,8 +39,12 @@ import { collUsers } from 'store/collections';
 
 const AuthLogin = ({ ...others }) => {
   let navigate = useNavigate();
+  const location = useLocation();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+
+  // Obtener datos del evento si vienen del state
+  const eventData = location.state?.eventData;
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -88,7 +92,17 @@ const AuthLogin = ({ ...others }) => {
                   if (pro == genConst.CONST_PRO_ADM || pro == genConst.CONST_PRO_ADM_BING) {
                     navigate('/main/dashboard');
                   } else {
-                    navigate('/app/dashboard');
+                    // Si hay datos del evento, redirigir al card-selector
+                    if (eventData?.path && eventData?.params) {
+                      navigate({
+                        pathname: eventData.path,
+                        search: createSearchParams(eventData.params).toString()
+                      }, {
+                        state: eventData.extraState
+                      });
+                    } else {
+                      navigate('/app/dashboard');
+                    }
                   }
                 });
               }, 2000);

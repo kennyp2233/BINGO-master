@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, createSearchParams } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -50,6 +50,7 @@ import { generateId } from 'utils/idGenerator';
 
 const AuthRegister = ({ ...others }) => {
   let navigate = useNavigate();
+  const location = useLocation();
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const [showPassword, setShowPassword] = useState(false);
@@ -58,6 +59,9 @@ const AuthRegister = ({ ...others }) => {
   const [level, setLevel] = useState();
 
   const [openLoader, setOpenLoader] = React.useState(false);
+
+  // Obtener datos del evento si vienen del state
+  const eventData = location.state?.eventData;
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -149,7 +153,15 @@ const AuthRegister = ({ ...others }) => {
               toast.success('Usuario registrado correctamente!.', { position: toast.POSITION.TOP_RIGHT });
               setTimeout(() => {
                 setOpenLoader(false);
-                navigate('/app/dashboard');
+                // Si hay datos del evento, redirigir al card-selector
+                if (eventData?.path && eventData?.params) {
+                  navigate({
+                    pathname: eventData.path,
+                    search: createSearchParams(eventData.params).toString()
+                  });
+                } else {
+                  navigate('/app/dashboard');
+                }
               }, 2000);
             })
             .catch((error) => {

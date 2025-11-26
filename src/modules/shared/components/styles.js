@@ -19,7 +19,8 @@ export const uiStyles = {
     padding: 40
   },
   appbar: {
-    background: 'rgba(255,255,255,0)',
+    background: 'rgba(255, 255, 255, 0.1)',
+    backdropFilter: 'blur(10px)',
     height: 75
   },
   appbarWrapper: {

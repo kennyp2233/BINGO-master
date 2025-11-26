@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 // Material UI
 import { useTheme } from '@mui/material/styles';
 import { Divider, Grid, Typography, Button, Modal, Box, CircularProgress } from '@mui/material';
@@ -20,14 +20,19 @@ import { collUsers } from 'store/collections';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { fullDate } from 'utils/validations';
+import { createSearchParams } from 'react-router-dom';
 
 const provider = new GoogleAuthProvider();
 
 const Signin = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
   const auth = getAuth();
   const [openLoader, setOpenLoader] = useState(false);
+
+  // Obtener datos del evento si vienen del state
+  const eventData = location.state?.eventData;
 
   const handleLoginGoogle = async () => {
     try {
@@ -58,10 +63,17 @@ const Signin = () => {
           if (pro == genConst.CONST_PRO_ADM || pro == genConst.CONST_PRO_ADM_BING) {
             navigate('/main/dashboard');
           } else {
-            navigate('/app/dashboard');
+            // Si hay datos del evento, redirigir al card-selector
+            if (eventData?.path && eventData?.params) {
+              navigate({
+                pathname: eventData.path,
+                search: createSearchParams(eventData.params).toString()
+              });
+            } else {
+              navigate('/app/dashboard');
+            }
           }
         });
-        // navigate('/app/dashboard');
       }, 2000);
     } catch (error) {
       console.error('Login error:', error);

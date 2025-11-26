@@ -3,8 +3,9 @@
  */
 
 import { db } from 'config/firebase';
-import { collection, addDoc, updateDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, doc, setDoc } from 'firebase/firestore';
 import { PAYPHONE_CONFIG } from 'store/constant';
+import { collUserCards, collCards } from 'store/collections';
 import { generateId } from 'utils/idGenerator';
 import { fullDate } from 'utils/validations';
 import { paymentResponseService } from './paymentResponseService';
@@ -95,8 +96,6 @@ const fetchTransactionStatus = async (data) => {
  */
 const saveUserCards = async (cards, userId, userName) => {
   try {
-    const userCardsRef = collection(db, 'userCards');
-
     for (const item of cards) {
       const idUserCard = generateId(10);
       const cardObject = {
@@ -120,14 +119,18 @@ const saveUserCards = async (cards, userId, userName) => {
         status: 'active'
       };
 
-      await addDoc(userCardsRef, cardObject);
+      // Usar setDoc con ID explícito en lugar de addDoc
+      await setDoc(doc(db, collUserCards, idUserCard), cardObject);
+      console.log(`✓ Cartilla ${item.num} asignada al usuario ${userName}`);
 
-      // Actualizar estado de la cartilla original
-      const cardRef = doc(db, 'cards', item.id);
-      await updateDoc(cardRef, { state: 0 });
+      // Actualizar estado de la cartilla original a "asignada" (0)
+      await updateDoc(doc(db, collCards, item.id), { state: 0 });
+      console.log(`✓ Cartilla ${item.num} marcada como no disponible`);
     }
+
+    console.log(`✅ Total de ${cards.length} cartillas asignadas exitosamente`);
   } catch (error) {
-    console.error('Error guardando cartillas del usuario:', error);
+    console.error('❌ Error guardando cartillas del usuario:', error);
     throw error;
   }
 };

@@ -1,0 +1,142 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function para verificar si el usuario está autenticado
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Helper function para verificar si el usuario es el dueño del documento
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // ========================================
+    // COLECCIONES PÚBLICAS (Solo lectura)
+    // ========================================
+
+    // Games - Eventos de bingo (acceso público para lectura)
+    match /Games/{gameId} {
+      allow read: if true; // Cualquiera puede leer los eventos
+      allow write: if isSignedIn(); // Solo usuarios autenticados pueden escribir
+    }
+
+    // Cards - Cartillas de bingo (acceso público para lectura)
+    match /Cards/{cardId} {
+      allow read: if true; // Cualquiera puede ver las cartillas disponibles
+      allow write: if isSignedIn(); // Solo usuarios autenticados pueden escribir
+    }
+
+    // ========================================
+    // COLECCIONES PROTEGIDAS (Requieren autenticación)
+    // ========================================
+
+    // Users - Información de usuarios
+    match /Users/{userId} {
+      allow read: if isOwner(userId); // Solo el usuario puede leer su propia info
+      allow write: if isOwner(userId); // Solo el usuario puede modificar su propia info
+    }
+
+    // AdminUsers - Usuarios administradores
+    match /AdminUsers/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    // Payments - Pagos
+    match /Payments/{paymentId} {
+      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn();
+      allow update, delete: if false; // Los pagos no se pueden modificar ni eliminar
+    }
+
+    // UserCards - Cartillas de usuarios
+    match /UserCards/{userCardId} {
+      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow delete: if false; // No se pueden eliminar cartillas compradas
+    }
+
+    // Logs - Registros del sistema
+    match /Logs/{logId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if false;
+    }
+
+    // UserLog - Logs de usuarios
+    match /UserLog/{logId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if false;
+    }
+
+    // Notifications - Notificaciones
+    match /Notifications/{notificationId} {
+      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    // GeneralNotifications - Notificaciones generales
+    match /GeneralNotifications/{notificationId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    // UserNotifications - Notificaciones de usuarios
+    match /UserNotifications/{notificationId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if isSignedIn();
+    }
+
+    // Settings - Configuración del sistema
+    match /Settings/{settingId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    // Boards - Tableros de juego
+    match /Boards/{boardId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    // GameInscription - Inscripciones a juegos
+    match /GameInscription/{inscriptionId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if isSignedIn();
+    }
+
+    // Incomes - Ingresos
+    match /Incomes/{incomeId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    // Inbox - Buzón de mensajes
+    match /Inbox/{messageId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if isSignedIn();
+    }
+
+    // Mail - Correos
+    match /Mail/{mailId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if false;
+    }
+
+    // Denegar acceso a todo lo demás por defecto
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

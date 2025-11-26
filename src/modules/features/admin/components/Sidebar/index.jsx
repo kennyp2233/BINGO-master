@@ -14,7 +14,7 @@ import LogoSection from '../LogoSection';
 import { drawerWidth } from 'store/constant';
 import config from 'config';
 
-const Sidebar = ({ drawerOpen, drawerToggle, window, user }) => {
+const Sidebar = ({ drawerOpen, drawerToggle, window, user, menuType }) => {
   const theme = useTheme();
   const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -34,7 +34,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, window, user }) => {
             paddingRight: '16px'
           }}
         >
-          <MenuList user={user} />
+          <MenuList user={user} menuType={menuType} />
           <Stack direction="row" justifyContent="center" sx={{ mb: 2 }}>
             <Chip label={config.version} disabled chipcolor="secondary" size="small" sx={{ cursor: 'pointer' }} />
           </Stack>
@@ -85,7 +85,8 @@ Sidebar.propTypes = {
   drawerOpen: PropTypes.bool,
   drawerToggle: PropTypes.func,
   window: PropTypes.object,
-  user: PropTypes.number
+  user: PropTypes.number,
+  menuType: PropTypes.string
 };
 
 export default Sidebar;

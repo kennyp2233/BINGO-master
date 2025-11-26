@@ -4,7 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 //Notifications
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { checkBingoWin } from 'utils/verifyBingoWinner';
+import { checkForBingoWinner } from '../../services/gameService';
 import { uiStyles } from '../../board/board.styles';
 import { titles } from '../../board/board.texts';
 import Confetti from 'react-confetti';
@@ -140,7 +140,7 @@ export default function Game() {
     const checkWinner = async () => {
       setCheckingWinner(true);
       try {
-        const winnerData = await checkBingoWin(selectedGame, bingoNumbers);
+        const winnerData = await checkForBingoWinner(selectedGame, bingoNumbers);
         if (winnerData) {
           setWinner(winnerData);
           setShowConfetti(true);

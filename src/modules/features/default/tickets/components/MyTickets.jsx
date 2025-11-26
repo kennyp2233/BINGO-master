@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
-  AppBar,
   Box,
   Button,
   ButtonGroup,
-  IconButton,
   Grid,
   Modal,
   Paper,
@@ -15,13 +13,11 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Toolbar,
   Typography
 } from '@mui/material';
-import { IconCalendar, IconCheck, IconCircleX, IconTicket } from '@tabler/icons';
+import { IconCheck, IconCircleX } from '@tabler/icons';
 import { uiStyles } from './MyTickets.styles';
 import { getAllEvents, getUserCardsForEvent, formatCardNumber } from '../services/ticketsService';
-import { getCardsByEventUsers } from '../../../admin/cards';
 import { bingoValues, genConst } from 'store/constant';
 import { onAuthStateChanged } from 'firebase/auth';
 import { authentication } from 'config/firebase';
@@ -77,19 +73,9 @@ function MyTickets() {
 
   return (
     <div>
-      <AppBar position="static" style={uiStyles.appbar}>
-        <Toolbar>
-          <IconButton color="inherit">
-            <IconTicket color="#FFF" />
-          </IconButton>
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1, color: '#FFF' }} align="center">
-            Mis Cartillas
-          </Typography>
-          <IconButton color="inherit">
-            <IconCalendar color="#FFF" />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      <Typography variant="h2" sx={{ mb: 3, color: 'text.primary', textAlign: 'center' }}>
+        Mis Cartillas
+      </Typography>
       <Paper style={{ marginTop: 10 }}>
         <TableContainer sx={{ maxHeight: '100%' }}>
           <Table stickyHeader aria-label="sticky table">
@@ -165,7 +151,7 @@ function MyTickets() {
                 {cardList.map((r) => (
                   <Grid item lg={1} md={1} sm={1} xs={2} key={r.id}>
                     <Button
-                      variant="containded"
+                      variant="contained"
                       style={{ backgroundColor: genConst.CONST_CREATE_COLOR, color: '#FFF', height: 40 }}
                       onClick={() => {
                         handleOpenCard();

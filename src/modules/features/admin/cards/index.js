@@ -9,7 +9,8 @@ export {
   checkCardAvailability,
   clearCardsPaginationCache,
   getGameCardsByUserEvent,
-  getCardsByEventUsers
+  getCardsByEventUsers,
+  checkEventSoldOut
 } from './services/cardsService';
 
 // Componentes de cartillas

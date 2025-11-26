@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { lazy, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 
 // project imports
@@ -9,10 +9,8 @@ import config from './config';
 import themes from 'themes';
 import Loadable from 'components/Loadable';
 import MinimalLayout from 'layout/MinimalLayout';
-import MainLayout from 'layout/MainLayout';
-import AdminBingoLayout from 'layout/AdminBingoLayout';
-import HomeLayout from 'layout/HomeLayout';
-import DefaultLayout from 'layout/DefaultLayout';
+import AppLayout from 'modules/shared/layouts/AppLayout';
+import AdminLayout from 'modules/features/admin/layouts/AdminLayout';
 import { genConst } from 'store/constant';
 
 // Firebase
@@ -58,7 +56,7 @@ const AuthSignin = Loadable(lazy(() => import('views/pages/login/login/Signin'))
 const AuthSignup = Loadable(lazy(() => import('views/pages/login/login/Signup')));
 
 // dashboard Default
-const CardSelectorDefault = Loadable(lazy(() => import('modules/features/default/main/components/CardSelector')));
+const CardSelectorDefault = Loadable(lazy(() => import('modules/features/default/main/components/CardSelector/index')));
 const ConfirmationBuy = Loadable(lazy(() => import('modules/features/default/payment')));
 const DashboardDefault = Loadable(lazy(() => import('modules/features/default/dashboard/components/Dashboard')));
 const Failure = Loadable(lazy(() => import('modules/features/default/response/components/Failure')));
@@ -70,6 +68,30 @@ const ShareDefault = Loadable(lazy(() => import('modules/features/default/share/
 const Success = Loadable(lazy(() => import('modules/features/default/response/components/Success')));
 const UserProfileDefault = Loadable(lazy(() => import('modules/features/default/profile/components/UserProfile')));
 const UserSecurityDefault = Loadable(lazy(() => import('modules/features/default/profile/components/UserSecurity')));
+
+// Component to handle Payphone redirects globally
+const PayphoneRedirectHandler = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const transactionId = searchParams.get('id');
+    const clientTransactionId = searchParams.get('clientTransactionId');
+
+    // Si detectamos parámetros de Payphone en cualquier ruta, redirigir
+    if (transactionId && clientTransactionId) {
+      console.log('🔄 [App.jsx] Redirección global de Payphone detectada');
+      console.log('Parámetros:', { id: transactionId, clientTransactionId });
+      console.log('Redirigiendo a: /app/payment-response');
+
+      navigate(`/app/payment-response?id=${transactionId}&clientTransactionId=${clientTransactionId}`, {
+        replace: true
+      });
+    }
+  }, [searchParams, navigate]);
+
+  return null;
+};
 
 const App = () => {
   const customization = useSelector((state) => state.customization);
@@ -89,8 +111,9 @@ const App = () => {
     <ThemeProvider theme={themes(customization)}>
       <ToastContainer />
       <Router basename={config.basename}>
+        <PayphoneRedirectHandler />
         <Routes>
-          <Route element={<HomeLayout />} path="/" exact>
+          <Route element={<AppLayout />} path="/" exact>
             <Route element={<Home />} path="/" exact />
           </Route>
           <Route element={<MinimalLayout />} path="/auth" exact>
@@ -101,7 +124,7 @@ const App = () => {
             <Route path="*" element={<Navigate to="404" />} />
           </Route>
           {profile == genConst.CONST_PRO_ADM ? (
-            <Route element={<MainLayout />} path="/main" exact>
+            <Route element={<AdminLayout menuType="admin" />} path="/main" exact>
               <Route element={<DashboardAdmin />} path="dashboard" exact />
               <Route element={<AdminUsers />} path="admin-users" exact />
               <Route element={<Users />} path="users" exact />
@@ -122,13 +145,13 @@ const App = () => {
               <Route element={<UserSecurity />} path="user-security" exact />
             </Route>
           ) : profile == genConst.CONST_PRO_ADM_BING ? (
-            <Route element={<AdminBingoLayout />} path="/main" exact>
+            <Route element={<AdminLayout menuType="bingo" />} path="/main" exact>
               <Route element={<DashboardAdmin />} path="dashboard" exact />
               <Route element={<CardsUser />} path="cards-user" exact />
             </Route>
           ) : (
-            <Route element={<DefaultLayout />} path="/app" exact>
-              <Route element={<DashboardDefault />} path="dashboard" exact />
+            <Route element={<AppLayout requireAuth={true} />} path="/app" exact>
+              <Route path="dashboard" element={<Navigate to="/" replace />} />
               <Route element={<CardSelectorDefault />} path="card-selector" exact />
               <Route element={<PlayBingo />} path="play-bingo" exact />
               <Route element={<MyTickets />} path="my-tickets" exact />

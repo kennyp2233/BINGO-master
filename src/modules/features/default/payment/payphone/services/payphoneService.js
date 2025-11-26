@@ -20,7 +20,7 @@ export const configurePayphoneButton = (totalValue, invoiceData) => {
 
     // Construir la URL de respuesta dinámica basada en el dominio actual
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
-    const responseUrl = `${baseUrl}/payment-response`;
+    const responseUrl = `${baseUrl}/app/payment-response`;
 
     const config = {
       token: TOKEN,
@@ -35,7 +35,7 @@ export const configurePayphoneButton = (totalValue, invoiceData) => {
       storeId: STORE_ID, // ID de la sucursal
       reference: invoiceData.reference || 'Pago cartillas de Bingo', // Referencia del pago
       responseUrl, // URL de respuesta después del pago
-      cancellationUrl: `${baseUrl}/dashboard`, // URL de cancelación
+      cancellationUrl: `${baseUrl}/app/dashboard`, // URL de cancelación
       lang: "es", // Idioma: español
       defaultMethod: "card", // Método por defecto: tarjeta
       timeZone: -5, // Zona horaria Ecuador

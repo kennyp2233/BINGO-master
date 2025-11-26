@@ -69,7 +69,7 @@ export const savePaymentTransaction = async (transactionData) => {
  */
 export const updatePaymentStatus = async (paymentId, status) => {
   try {
-    const paymentRef = doc(db, 'payments', paymentId);
+    const paymentRef = doc(db, collPayments, paymentId);
     await updateDoc(paymentRef, {
       status,
       updatedAt: new Date()

@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import { Typography } from '@mui/material';
 // project imports
 import NavGroup from './NavGroup';
-import menuItem from 'layout/menu-admin-items';
+import adminItems from 'modules/features/admin/constants/menu/admin-items';
+import bingoItems from 'modules/features/admin/constants/menu/bingo-items';
 
-const MenuList = () => {
+const MenuList = ({ menuType }) => {
+  const menuItem = menuType === 'bingo' ? bingoItems : adminItems;
+
   const navItems = menuItem.items.map((item) => {
     switch (item.type) {
       case 'group':
@@ -23,7 +26,7 @@ const MenuList = () => {
 };
 
 MenuList.propTypes = {
-  user: PropTypes.number
+  menuType: PropTypes.string
 };
 
 export default MenuList;

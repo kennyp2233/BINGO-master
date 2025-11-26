@@ -204,12 +204,14 @@ const CardSelector = () => {
                       ) : (
                         <Grid container spacing={0.5}>
                           {cards.map((item) => {
-                            const buttonColor = item.state === 0 ? '#525252' : isCardSelected(item.id) ? 'green' : '#00adef';
+                            // Estado 0 = No disponible, Estados 1 y 2 = Disponible (2 es devuelta)
+                            const isAvailable = item.state === 1 || item.state === 2;
+                            const buttonColor = !isAvailable ? '#525252' : isCardSelected(item.id) ? 'green' : '#00adef';
                             return (
                               <Grid key={item.id} item lg={0.5} md={0.5} sm={1} xs={1}>
                                 <ButtonBase
-                                  sx={{ borderRadius: 8, cursor: item.state === 1 ? 'pointer' : 'not-allowed' }}
-                                  disabled={item.state == 1 ? false : true || checkingAvailability}
+                                  sx={{ borderRadius: 8, cursor: isAvailable ? 'pointer' : 'not-allowed' }}
+                                  disabled={!isAvailable || checkingAvailability}
                                 >
                                   <Avatar
                                     variant="rounded"

@@ -1,17 +1,20 @@
 import PropTypes from 'prop-types';
-import { useNavigate, createSearchParams } from 'react-router-dom';
+import { useNavigate, createSearchParams, useLocation } from 'react-router-dom';
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
 import { Avatar, Box, Button, ButtonGroup, Grid, Typography } from '@mui/material';
 // project imports
 import MainCard from 'components/cards/MainCard';
+import { useAuth } from 'modules/features/auth/hooks/useAuth';
 // assets
 import { IconCalendar, IconFileDollar, IconPlayCard } from '@tabler/icons';
 
 const EventCard = ({ name, date, bg, id, transmition, state }) => {
     const theme = useTheme();
     const navigate = useNavigate();
-    console.log(id, name, date);
+    const location = useLocation();
+    const { isLoggin } = useAuth();
+
     const CardWrapper = styled(MainCard)({
         backgroundColor: bg,
         color: '#fff',
@@ -29,6 +32,14 @@ const EventCard = ({ name, date, bg, id, transmition, state }) => {
     };
 
     const handleNavigation = (path, params) => {
+        // Si el usuario no está autenticado, redirigir a login
+        if (!isLoggin) {
+            navigate('/auth/signin', {
+                state: { from: location.pathname, eventData: { path, params } }
+            });
+            return;
+        }
+
         navigate({
             pathname: path,
             search: createSearchParams(params).toString()
