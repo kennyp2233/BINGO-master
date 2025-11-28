@@ -5,6 +5,10 @@ import { IconSearch } from '@tabler/icons';
 import { gameService } from 'modules/features/default/main/services/gameService';
 import MessageDark from 'modules/shared/components/message/MessageDark';
 import MarketCard from 'modules/features/default/dashboard/components/MarketCard';
+import { onAuthStateChanged } from 'firebase/auth';
+import { authentication } from 'config/firebase';
+import { getProfileUser } from 'modules/shared/services/firebaseCommon';
+import { genConst } from 'store/constant';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -30,6 +34,22 @@ const Home = () => {
         replace: true
       });
     }
+
+    // Verificar si el usuario es administrador para redirigir al dashboard
+    const unsubscribe = onAuthStateChanged(authentication, async (user) => {
+      if (user) {
+        try {
+          const profile = await getProfileUser(user.uid);
+          if (profile === genConst.CONST_PRO_ADM || profile === genConst.CONST_PRO_ADM_BING) {
+            navigate('/main/dashboard', { replace: true });
+          }
+        } catch (error) {
+          console.error('Error checking admin profile:', error);
+        }
+      }
+    });
+
+    return () => unsubscribe();
   }, [searchParams, navigate]);
 
   useEffect(() => {
