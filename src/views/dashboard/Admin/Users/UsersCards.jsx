@@ -1,8 +1,8 @@
-import { useNavigate, useParams } from 'react-router';
+﻿import { useNavigate, useParams } from 'react-router';
 import { uiStyles } from './Users.styles';
 import { AppBar, Box, Grid, IconButton, Toolbar, Typography, Button } from '@mui/material';
 import { IconArrowLeft, IconFileCertificate } from '@tabler/icons';
-import ItemBingo from 'components/bingo/ItemBingo';
+import ItemBingo from 'modules/shared/components/bingo/ItemBingo';
 import { useEffect, useState, useRef } from 'react';
 import { getUserCardsPaginated, getUserData, getUserName } from 'config/firebaseEvents';
 import { useTheme } from '@emotion/react';
@@ -147,3 +147,4 @@ const UsersCards = () => {
 };
 
 export default UsersCards;
+

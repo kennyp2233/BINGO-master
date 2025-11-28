@@ -29,7 +29,7 @@ const QuickSelectModal = ({ open, onClose, eventId, eventName, onBuySelection })
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [selectedItems, setSelectedItems] = useState([]);
-    const [filterState, setFilterState] = useState(null); // null = All, 1 = Available
+    const [filterState, setFilterState] = useState(1); // null = All, 1 = Available
     const rowsPerPage = 24;
 
     useEffect(() => {

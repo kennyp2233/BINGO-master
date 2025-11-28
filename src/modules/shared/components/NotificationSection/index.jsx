@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+﻿import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // material-ui
@@ -20,8 +20,8 @@ import {
 } from '@mui/material';
 
 // project imports
-import MainCard from 'components/cards/MainCard';
-import Transitions from 'components/extended/Transitions';
+import MainCard from 'modules/shared/components/cards/MainCard';
+import Transitions from 'modules/shared/components/extended/Transitions';
 import NotificationList from './NotificationList';
 
 import { collUsrNoti } from 'store/collections';
@@ -183,3 +183,5 @@ const NotificationSection = () => {
 };
 
 export default NotificationSection;
+
+

@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+﻿/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import {
   Paper,
@@ -26,7 +26,7 @@ import { JsonViewer } from '@textea/json-viewer';
 import { IconCircleX, IconReload, IconSearch, IconEyeTable, IconFile } from '@tabler/icons';
 import { titles, inputLabels } from './Logs.texts';
 import { getLogsData } from 'config/firebaseEvents';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import { genConst } from 'store/constant';
 
 // Optimized search function
@@ -198,3 +198,4 @@ export default function Logs() {
     </Box>
   );
 }
+

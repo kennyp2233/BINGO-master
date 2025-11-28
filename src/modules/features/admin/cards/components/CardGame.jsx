@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import {
   AppBar,
@@ -26,12 +26,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IconCalendar, IconCards, IconCheck, IconHomeStats, IconSearch, IconTrash } from '@tabler/icons';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import { titles } from 'modules/features/admin/cards';
 import { bingoValues, genConst } from 'store/constant';
 import { searchingCard, searchingGameData } from 'utils/search';
 import { generateUniqueBingoCards } from 'utils/generateUniqueBingoCards';
-import { ModalCard } from 'components/cards/ModalCard';
+import { ModalCard } from 'modules/shared/components/cards/ModalCard';
 import { useNavigate } from 'react-router';
 
 export default function CardGame() {
@@ -425,3 +425,5 @@ export default function CardGame() {
     </Box>
   );
 }
+
+

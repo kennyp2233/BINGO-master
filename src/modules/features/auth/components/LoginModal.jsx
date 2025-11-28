@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     Box,
@@ -30,7 +30,7 @@ import { genConst } from 'store/constant';
 import { fullDate, generateDate } from 'utils/validations';
 import { generateId } from 'utils/idGenerator';
 import { collUsers } from 'store/collections';
-import AnimateButton from 'components/extended/AnimateButton';
+import AnimateButton from 'modules/shared/components/extended/AnimateButton';
 import { toast } from 'react-toastify';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import google from 'assets/images/google.webp';
@@ -372,3 +372,4 @@ LoginModal.propTypes = {
 };
 
 export default LoginModal;
+

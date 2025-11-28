@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, Grid, Modal, Typography } from '@mui/material';
-import MessageDark from 'components/message/MessageDark';
+import { Box, Grid, Modal, Typography, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import CircularProgress from '@mui/material/CircularProgress';
 import { getGameCardsByEventPaginated, checkCardAvailability, clearCardsPaginationCache } from 'modules/features/admin/cards';
 import { checkTermsAccepted, acceptTerms } from '../../services/termsService';
@@ -15,9 +15,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { onAuthStateChanged } from 'firebase/auth';
 import { authentication } from 'config/firebase';
-import StateTickets from 'components/StateTickets';
-import BingoCard from 'components/bingo/BingoCard';
-import CustomModal from 'components/Modal';
+import StateTickets from 'modules/shared/components/StateTickets';
+import BingoCard from 'modules/shared/components/bingo/BingoCard';
+import CustomModal from 'modules/shared/components/Modal';
 import TermsModal from '../TermsModal';
 
 // Sub-components
@@ -63,6 +63,7 @@ const CardSelector = () => {
 
     // Availability check
     const [checkingAvailability, setCheckingAvailability] = useState(false);
+    const [filterState, setFilterState] = useState(1); // null = All, 1 = Available
 
     useEffect(() => {
         onAuthStateChanged(authentication, async (user) => {
@@ -87,7 +88,7 @@ const CardSelector = () => {
                 setLoading(true);
                 try {
                     // Usar la nueva función paginada
-                    const { cards: fetchedCards, totalCount } = await getGameCardsByEventPaginated(id, page, rowsPerPage);
+                    const { cards: fetchedCards, totalCount } = await getGameCardsByEventPaginated(id, page, rowsPerPage, filterState);
                     setCards(fetchedCards);
                     setTotalPages(Math.ceil(totalCount / rowsPerPage));
 
@@ -123,7 +124,14 @@ const CardSelector = () => {
             }
         };
         fetchCards();
-    }, [id, page, rowsPerPage]);
+    }, [id, page, rowsPerPage, filterState]);
+
+    const handleFilterChange = (event, newFilter) => {
+        if (newFilter !== null) {
+            setFilterState(newFilter === 'all' ? null : 1);
+            setPage(0); // Reset page when filter changes
+        }
+    };
 
     const handlePageChange = (event, value) => {
         setPage(value - 1); // Pagination component is 1-based, API is 0-based
@@ -241,6 +249,30 @@ const CardSelector = () => {
                                 Selecciona tus Cartillas
                             </Typography>
 
+                            <ToggleButtonGroup
+                                value={filterState === null ? 'all' : 'available'}
+                                exclusive
+                                onChange={handleFilterChange}
+                                size="small"
+                                sx={{
+                                    mx: 2,
+                                    '& .MuiToggleButton-root': {
+                                        color: theme.palette.text.secondary,
+                                        borderColor: theme.palette.divider,
+                                        '&.Mui-selected': {
+                                            color: '#fff',
+                                            bgcolor: theme.palette.primary.main,
+                                            '&:hover': {
+                                                bgcolor: theme.palette.primary.dark,
+                                            }
+                                        }
+                                    }
+                                }}
+                            >
+                                <ToggleButton value="all">Todas</ToggleButton>
+                                <ToggleButton value="available">Disponibles</ToggleButton>
+                            </ToggleButtonGroup>
+
                             {/* Modern Legend */}
                             <Box sx={{ display: 'flex', gap: 2 }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -313,3 +345,4 @@ const CardSelector = () => {
 };
 
 export default CardSelector;
+

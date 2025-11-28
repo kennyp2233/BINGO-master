@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+﻿/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import {
@@ -19,7 +19,7 @@ import {
   OutlinedInput
 } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import { IconTrash, IconCircleX, IconPlus, IconArrowLeft, IconUserPlus } from '@tabler/icons';
 //Firebase Events
 import { createDocument, deleteDocument } from 'modules/shared/services/firebaseCommon';
@@ -377,3 +377,4 @@ export default function GameUsers() {
     </Box>
   );
 }
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import {
   Paper,
@@ -26,7 +26,7 @@ import {
   MenuItem
 } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import { IconTrash, IconEdit, IconCircleX, IconPencil, IconReload, IconSearch, IconPlus, IconHomeDollar } from '@tabler/icons';
 import { createDocument, updateDocument } from 'modules/shared';
 import { getPaymentsListPaginated, getTotalPaidBenefit } from 'modules/features/default/payment';
@@ -601,3 +601,4 @@ export default function Payments() {
     </Box>
   );
 }
+

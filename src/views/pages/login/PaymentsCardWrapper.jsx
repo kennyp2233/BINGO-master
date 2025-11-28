@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
+﻿import PropTypes from 'prop-types';
 
 // material-ui
 import { Box } from '@mui/material';
 
 // project import
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'modules/shared/components/cards/MainCard';
 
 // ==============================|| AUTHENTICATION CARD WRAPPER ||============================== //
 
@@ -30,3 +30,4 @@ PaymentsCardWrapper.propTypes = {
 };
 
 export default PaymentsCardWrapper;
+

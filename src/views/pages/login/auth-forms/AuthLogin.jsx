@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+﻿/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation, createSearchParams } from 'react-router-dom';
 // material-ui
@@ -25,7 +25,7 @@ import { createLog, getProfileUser, isSessionActive } from 'config/firebaseEvent
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 // project imports
-import AnimateButton from 'components/extended/AnimateButton';
+import AnimateButton from 'modules/shared/components/extended/AnimateButton';
 //Notifications
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -253,3 +253,4 @@ const style = {
 };
 
 export default AuthLogin;
+

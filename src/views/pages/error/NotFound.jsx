@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'react-credit-cards/es/styles-compiled.css';
 
@@ -8,7 +8,7 @@ import { Button, Grid, Typography } from '@mui/material';
 // project imports
 import AuthWrapper from '../login/AuthWrapper';
 import AuthCardWrapper from '../login/AuthCardWrapper';
-import AuthFooter from 'components/cards/AuthFooter';
+import AuthFooter from 'modules/shared/components/cards/AuthFooter';
 
 // Firebase
 import { authentication } from 'config/firebase';
@@ -80,3 +80,4 @@ const NotFound = () => {
 };
 
 export default NotFound;
+

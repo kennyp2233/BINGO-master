@@ -1,10 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
+﻿import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { ButtonBase } from '@mui/material';
 
 // project imports
-import Logo from 'components/Logo';
+import Logo from 'modules/shared/components/Logo';
 import { MENU_OPEN } from 'store/actions';
 
 // ==============================|| MAIN LOGO ||============================== //
@@ -20,3 +20,4 @@ const LogoSection = () => {
 };
 
 export default LogoSection;
+

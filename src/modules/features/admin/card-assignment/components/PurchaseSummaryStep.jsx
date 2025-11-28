@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
+﻿import PropTypes from 'prop-types';
 import { Grid, Typography, Box, Button, Divider } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import ItemBingo from 'components/bingo/ItemBingo';
+import ItemBingo from 'modules/shared/components/bingo/ItemBingo';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { processCardAssignment } from '../services/cardAssignmentService';

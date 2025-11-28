@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Paper, Tooltip } from '@mui/material';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@mui/material';
 import { Button, Grid, Modal, Box } from '@mui/material';
 import { IconMessage2 } from '@tabler/icons';
 import { uiStyles } from './Mail.styles';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import { collMail } from 'store/collections';
 import { getMail, updateDocument } from 'config/firebaseEvents';
 import { genConst } from 'store/constant';
@@ -146,3 +146,4 @@ const Mail = () => {
 };
 
 export default Mail;
+

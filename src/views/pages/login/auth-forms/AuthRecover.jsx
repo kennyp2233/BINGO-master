@@ -1,4 +1,4 @@
-// material-ui
+﻿// material-ui
 import { useTheme } from '@mui/material/styles';
 import { Box, Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from '@mui/material';
 
@@ -14,7 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // project imports
-import AnimateButton from 'components/extended/AnimateButton';
+import AnimateButton from 'modules/shared/components/extended/AnimateButton';
 import { generateId } from 'utils/idGenerator';
 import { fullDate } from 'utils/validations';
 import { genConst } from 'store/constant';
@@ -110,3 +110,4 @@ const AuthRecover = ({ ...others }) => {
 };
 
 export default AuthRecover;
+

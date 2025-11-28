@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // material-ui
 import { styled } from '@mui/material/styles';
 import { Box, Grid, Typography, Modal } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 // project imports
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'modules/shared/components/cards/MainCard';
 import defaultUser from 'assets/images/profile/profile-picture-6.jpg';
 //Notifications
 import { ToastContainer, toast } from 'react-toastify';
@@ -166,3 +166,4 @@ ProfileAvatar.propTypes = {
 };
 
 export default ProfileAvatar;
+

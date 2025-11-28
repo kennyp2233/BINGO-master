@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 // material-ui
 import CircularProgress from '@mui/material/CircularProgress';
 import { styled, useTheme } from '@mui/material/styles';
 import { Box, Grid, Typography, FormControl, Button, InputLabel, OutlinedInput, Modal } from '@mui/material';
 // project imports
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'modules/shared/components/cards/MainCard';
 // Firebase
 import { authentication } from 'config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -12,7 +12,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // project imports
-import AnimateButton from 'components/extended/AnimateButton';
+import AnimateButton from 'modules/shared/components/extended/AnimateButton';
 import { fullDate } from 'utils/validations';
 import { profileService } from '../services/profileService';
 import { uiStyles } from './Profile.styles';

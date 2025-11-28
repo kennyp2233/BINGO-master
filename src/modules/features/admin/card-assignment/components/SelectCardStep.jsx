@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import {
@@ -22,10 +22,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import { getGameCardsByEventPaginated } from 'modules/features/admin/cards';
 import { verifyCardAvailability } from '../services/cardAssignmentService';
-import StateTickets from 'components/StateTickets';
-import ItemBingo from 'components/bingo/ItemBingo';
-import CustomModal from 'components/Modal';
-import BingoCard from 'components/bingo/BingoCard';
+import StateTickets from 'modules/shared/components/StateTickets';
+import ItemBingo from 'modules/shared/components/bingo/ItemBingo';
+import CustomModal from 'modules/shared/components/Modal';
+import BingoCard from 'modules/shared/components/bingo/BingoCard';
 import { toast } from 'react-toastify';
 import { titles } from '../card-assignment.texts';
 

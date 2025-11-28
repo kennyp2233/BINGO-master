@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 // material-ui
 import { Grid } from '@mui/material';
 // data
@@ -6,9 +6,9 @@ import { gridSpacing } from 'store/constant';
 // Services
 import { getDashboardStats } from 'modules/features/admin/dashboard/services';
 //Components
-import TotalCard from 'components/cards/TotalCard';
-import TotalYellowCard from 'components/cards/TotalYellowCard';
-import EarningBlueCard from 'components/cards/EarningBlueCard';
+import TotalCard from 'modules/shared/components/cards/TotalCard';
+import TotalYellowCard from 'modules/shared/components/cards/TotalYellowCard';
+import EarningBlueCard from 'modules/shared/components/cards/EarningBlueCard';
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -58,3 +58,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+

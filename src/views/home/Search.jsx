@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -18,7 +18,7 @@ import {
   FormControl,
   OutlinedInput
 } from '@mui/material';
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'modules/shared/components/cards/MainCard';
 import { uiStyles } from 'components/search/styles';
 import { styled } from '@mui/material/styles';
 import { useGetBusiness } from 'hooks/useGetBusiness';
@@ -211,3 +211,4 @@ const Search = () => {
 };
 
 export default Search;
+

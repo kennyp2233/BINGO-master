@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 import { Paper, Tooltip } from '@mui/material';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@mui/material';
 import { Button, Grid, Modal, Box } from '@mui/material';
 import { IconMessage2 } from '@tabler/icons';
 import { uiStyles } from './Notifications.styles';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import { collUsrNoti } from 'store/collections';
 import { updateDocument } from 'modules/shared';
 import { genConst } from 'store/constant';

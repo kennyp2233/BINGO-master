@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import PropTypes from 'prop-types';
 
 // material-ui
@@ -6,7 +6,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import { Box, Grid, Typography, FormControl, FormHelperText, Button, InputLabel, OutlinedInput } from '@mui/material';
 
 // project imports
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'modules/shared/components/cards/MainCard';
 
 //Notifications
 import { ToastContainer, toast } from 'react-toastify';
@@ -17,7 +17,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project imports
-import AnimateButton from 'components/extended/AnimateButton';
+import AnimateButton from 'modules/shared/components/extended/AnimateButton';
 import { profileService } from '../index';
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({

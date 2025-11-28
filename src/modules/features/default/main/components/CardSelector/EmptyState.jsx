@@ -1,5 +1,5 @@
-import { Grid } from '@mui/material';
-import MessageDark from 'components/message/MessageDark';
+﻿import { Grid } from '@mui/material';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 
 const EmptyState = () => (
     <Grid container style={{ marginTop: 20 }}>
@@ -12,3 +12,4 @@ const EmptyState = () => (
 );
 
 export default EmptyState;
+

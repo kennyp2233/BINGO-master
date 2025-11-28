@@ -27,7 +27,7 @@ export default defineConfig({
       App: path.resolve(__dirname, 'src/App.jsx'),
       store: path.resolve(__dirname, 'src/store'),
       themes: path.resolve(__dirname, 'src/themes'),
-      components: path.resolve(__dirname, 'src/components'),
+
       layout: path.resolve(__dirname, 'src/layout'),
       views: path.resolve(__dirname, 'src/views'),
       assets: path.resolve(__dirname, 'src/assets'),

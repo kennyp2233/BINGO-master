@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Cards from 'react-credit-cards';
@@ -9,7 +9,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import { Box, Grid, Typography, FormControl, Button, InputLabel, OutlinedInput } from '@mui/material';
 
 // project imports
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'modules/shared/components/cards/MainCard';
 
 // Firebase
 import { authentication, db } from 'config/firebase';
@@ -21,7 +21,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // project imports
-import AnimateButton from 'components/extended/AnimateButton';
+import AnimateButton from 'modules/shared/components/extended/AnimateButton';
 import { collUserAddress } from 'store/collections';
 import { fullDate } from 'utils/validations';
 
@@ -192,3 +192,4 @@ UserAddPaymentMethods.propTypes = {
 };
 
 export default UserAddPaymentMethods;
+

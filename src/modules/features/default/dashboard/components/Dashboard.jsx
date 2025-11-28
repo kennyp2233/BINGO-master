@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 import EventCard from './EventCard';
 import { gameService } from '../../main/services/gameService';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 
 const Dashboard = () => {
     const [events, setEvents] = useState([]);

@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
+﻿import PropTypes from 'prop-types';
 import { useNavigate, createSearchParams, useLocation } from 'react-router-dom';
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
 import { Avatar, Box, Button, ButtonGroup, Grid, Typography } from '@mui/material';
 // project imports
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'modules/shared/components/cards/MainCard';
 import { useAuth } from 'modules/features/auth/hooks/useAuth';
 // assets
 import { IconCalendar, IconFileDollar, IconPlayCard } from '@tabler/icons';

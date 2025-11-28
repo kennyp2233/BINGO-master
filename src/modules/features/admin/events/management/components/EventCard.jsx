@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
+﻿import PropTypes from 'prop-types';
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
 import { Avatar, Box, Grid, Typography } from '@mui/material';
 // project imports
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'modules/shared/components/cards/MainCard';
 // assets
 import { IconCalendar } from '@tabler/icons';
 
@@ -75,3 +75,4 @@ EventCard.propTypes = {
 };
 
 export default EventCard;
+

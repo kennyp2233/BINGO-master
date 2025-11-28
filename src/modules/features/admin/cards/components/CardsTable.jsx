@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Box,
@@ -15,8 +15,8 @@ import {
   TableRow
 } from '@mui/material';
 import { titles, uiStyles } from 'modules/features/admin/cards';
-import { ModalCard } from 'components/cards/ModalCard';
-import MessageDark from 'components/message/MessageDark';
+import { ModalCard } from 'modules/shared/components/cards/ModalCard';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import { deleteDocument } from 'modules/shared/services/firebaseCommon';
 import { getGameCardsByEventPaginated } from 'modules/features/admin/cards';
 import { bingoValues, genConst } from 'store/constant';
@@ -197,3 +197,4 @@ CardsTable.propTypes = {
   totalCards: PropTypes.number,
   setTotalCards: PropTypes.func
 };
+

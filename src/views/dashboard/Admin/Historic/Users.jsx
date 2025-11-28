@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+﻿/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import {
   Paper,
@@ -23,7 +23,7 @@ import { collection, getDocs } from 'firebase/firestore';
 
 //Notifications
 import 'react-toastify/dist/ReactToastify.css';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 
 function searchingData(search) {
   return function (x) {
@@ -148,3 +148,4 @@ export default function Users() {
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+﻿/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 //Firebase
@@ -24,7 +24,7 @@ import {
 import UsersNetworkChild from './UsersNetworkChild';
 import { titles } from './Users.texts';
 import { uiStyles } from './Users.styles';
-import TitleButton from 'components/message/TitleButton';
+import TitleButton from 'modules/shared/components/message/TitleButton';
 import { useGetUserNameByCode } from 'hooks/useGetUserByCode';
 
 const UsersNetwork = () => {
@@ -286,3 +286,4 @@ const UsersNetwork = () => {
 };
 
 export default UsersNetwork;
+

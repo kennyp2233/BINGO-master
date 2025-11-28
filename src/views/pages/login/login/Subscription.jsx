@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 //import { useSearchParams } from 'react-router-dom';
 
 // material-ui
@@ -21,8 +21,8 @@ import CreditCards from '../inscription/CreditCards';
 
 // project imports
 import AuthWrapper1 from '../AuthWrapper1';
-import Logo from 'components/Logo-md';
-import AuthFooter from 'components/cards/AuthFooter';
+import Logo from 'modules/shared/components/Logo-md';
+import AuthFooter from 'modules/shared/components/cards/AuthFooter';
 import { genConst } from 'store/constant';
 
 // assets
@@ -263,3 +263,4 @@ const Subscription = () => {
 };
 
 export default Subscription;
+

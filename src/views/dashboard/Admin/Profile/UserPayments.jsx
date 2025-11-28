@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+﻿/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Grid, Typography } from '@mui/material';
 
 // project imports
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'modules/shared/components/cards/MainCard';
 
 // Firebase
 import { authentication } from 'config/firebase';
@@ -63,3 +63,4 @@ UserPayments.propTypes = {
 };
 
 export default UserPayments;
+

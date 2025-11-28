@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 // Material UI
 import { useTheme } from '@mui/material/styles';
 import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 // Project imports
 import AuthWrapper1 from '../AuthWrapper';
 import AuthCardWrapper from '../AuthCardWrapper';
-import Logo from 'components/Logo-md';
+import Logo from 'modules/shared/components/Logo-md';
 import AuthRegister from '../auth-forms/AuthRegister';
 
 // Assets
@@ -77,3 +77,4 @@ const Signup = () => {
 };
 
 export default Signup;
+

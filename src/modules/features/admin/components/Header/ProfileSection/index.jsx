@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+﻿import React, { useState, useRef, useEffect } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -29,8 +29,8 @@ import { authentication } from 'config/firebase';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 // project imports
-import MainCard from 'components/cards/MainCard';
-import Transitions from 'components/extended/Transitions';
+import MainCard from 'modules/shared/components/cards/MainCard';
+import Transitions from 'modules/shared/components/extended/Transitions';
 import User1 from 'assets/images/profile/profile-picture-6.jpg';
 
 // assets
@@ -214,3 +214,5 @@ const ProfileSection = () => {
 };
 
 export default ProfileSection;
+
+

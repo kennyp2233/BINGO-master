@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import {
   Avatar,
@@ -28,7 +28,7 @@ import {
 } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import User1 from 'assets/images/profile/profile-picture-6.jpg';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import { IconTrash, IconEdit, IconCircleX, IconPencil, IconReload, IconUserCircle, IconSearch } from '@tabler/icons';
 
 //Firebase Events
@@ -499,3 +499,4 @@ export default function Users() {
     </Box>
   );
 }
+

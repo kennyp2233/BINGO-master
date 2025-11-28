@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 
 import { useTheme } from '@mui/material/styles';
 import { AppBar, Toolbar, Typography, IconButton, Paper, Avatar, Tooltip } from '@mui/material';
@@ -6,7 +6,7 @@ import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Table
 import { ButtonGroup, Button, Grid, Modal, Box, FormControl, OutlinedInput } from '@mui/material';
 import { IconCircleX, IconDeviceFloppy, IconEdit, IconNotification, IconPlus, IconTrash } from '@tabler/icons';
 import { uiStyles } from './Notifications.styles';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import { collGenNoti } from 'store/collections';
 import { createGlobalNotification, deleteDocument, getGeneralNotifications, updateDocument } from 'config/firebaseEvents';
 import { genConst } from 'store/constant';
@@ -379,3 +379,4 @@ const GeneralNotifications = () => {
 };
 
 export default GeneralNotifications;
+

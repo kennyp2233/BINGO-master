@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -9,8 +9,8 @@ import { IconBrandFacebook, IconBrandInstagram, IconBrandWhatsapp, IconBrandYout
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 // project imports
-import SubCard from 'components/cards/SubCard';
-import AnimateButton from 'components/extended/AnimateButton';
+import SubCard from 'modules/shared/components/cards/SubCard';
+import AnimateButton from 'modules/shared/components/extended/AnimateButton';
 import { genConst, gridSpacing } from 'store/constant';
 
 const Customization = () => {
@@ -124,3 +124,5 @@ const Customization = () => {
 };
 
 export default Customization;
+
+

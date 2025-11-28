@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import {
   Paper,
   Table,
@@ -25,7 +25,7 @@ import {
   MenuItem
 } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import { IconTrash, IconEdit, IconCircleX, IconDeviceFloppy, IconPlus, IconCalendar, IconSearch } from '@tabler/icons';
 //Firebase Events
 import { createDocument, deleteDocument, updateDocument } from 'modules/shared/services/firebaseCommon';
@@ -594,3 +594,4 @@ export default function NewGame() {
     </Box>
   );
 }
+

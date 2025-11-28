@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -7,8 +7,8 @@ import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import AuthWrapper1 from '../AuthWrapper';
 import AuthCardWrapper from '../AuthCardWrapper';
 import AuthRecover from '../auth-forms/AuthRecover';
-import Logo from 'components/Logo-md';
-import AuthFooter from 'components/cards/AuthFooter';
+import Logo from 'modules/shared/components/Logo-md';
+import AuthFooter from 'modules/shared/components/cards/AuthFooter';
 
 //Assets
 import bg01 from 'assets/images/bg/bg3.jpg';
@@ -78,3 +78,4 @@ const PasswordRecover = () => {
 };
 
 export default PasswordRecover;
+

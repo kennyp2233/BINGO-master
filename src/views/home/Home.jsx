@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Grid, Typography, Box, TextField, InputAdornment, Container, Stack } from '@mui/material';
 import { IconSearch } from '@tabler/icons';
 import { gameService } from 'modules/features/default/main/services/gameService';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import MarketCard from 'modules/features/default/dashboard/components/MarketCard';
 
 const Home = () => {
@@ -20,7 +20,7 @@ const Home = () => {
 
     if (transactionId && clientTransactionId) {
       // Redirigir automáticamente a la página de procesamiento de pagos
-      console.log('🔄 Redirección automática detectada desde Payphone');
+      console.log('ðŸ”„ Redirección automática detectada desde Payphone');
       console.log('Redirigiendo a /app/payment-response con parámetros:', {
         id: transactionId,
         clientTransactionId
@@ -147,3 +147,4 @@ const Home = () => {
 };
 
 export default Home;
+

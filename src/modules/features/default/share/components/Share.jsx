@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Box, Button, Card, CardActions, FormControl, Grid, InputLabel, OutlinedInput } from '@mui/material';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import { authentication } from 'config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import AnimateButton from 'components/extended/AnimateButton';
+import AnimateButton from 'modules/shared/components/extended/AnimateButton';
 import { EmailShareButton, FacebookShareButton, WhatsappShareButton } from 'react-share';
 import { EmailIcon, FacebookIcon, WhatsappIcon } from 'react-share';
 import { IconCopy } from '@tabler/icons';

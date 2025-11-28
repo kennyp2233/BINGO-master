@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
@@ -10,8 +10,8 @@ import { IconSettings } from '@tabler/icons';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 // project imports
-import SubCard from 'components/cards/SubCard';
-import AnimateButton from 'components/extended/AnimateButton';
+import SubCard from 'modules/shared/components/cards/SubCard';
+import AnimateButton from 'modules/shared/components/extended/AnimateButton';
 import { SET_FONT_FAMILY } from 'store/actions';
 import { gridSpacing } from 'store/constant';
 
@@ -165,3 +165,5 @@ const Customization = () => {
 };
 
 export default Customization;
+
+

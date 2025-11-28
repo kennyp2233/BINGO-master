@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 // Material UI
 import { useTheme } from '@mui/material/styles';
@@ -7,7 +7,7 @@ import { Divider, Grid, Typography, Button, Modal, Box, CircularProgress } from 
 import AuthWrapper1 from '../AuthWrapper';
 import AuthCardWrapper from '../AuthCardWrapper';
 import AuthLogin from '../auth-forms/AuthLogin';
-import Logo from 'components/Logo-md';
+import Logo from 'modules/shared/components/Logo-md';
 // Assets
 import bg01 from 'assets/images/bg/bg1.jpg';
 import google from 'assets/images/google.webp';
@@ -179,3 +179,4 @@ const styleLoader = {
 };
 
 export default Signin;
+

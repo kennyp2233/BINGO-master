@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 // material-ui
@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 
 // project imports
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'modules/shared/components/cards/MainCard';
 
 // Services
 import { changeUserPassword } from '../services/profileService';
@@ -31,7 +31,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project imports
-import AnimateButton from 'components/extended/AnimateButton';
+import AnimateButton from 'modules/shared/components/extended/AnimateButton';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';

@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+﻿/* eslint-disable react-hooks/exhaustive-deps */
 import React, { lazy, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 // project imports
 import config from './config';
 import themes from 'themes';
-import Loadable from 'components/Loadable';
+import Loadable from 'modules/shared/components/Loadable';
 import MinimalLayout from 'layout/MinimalLayout';
 import AppLayout from 'modules/shared/layouts/AppLayout';
 import AdminLayout from 'modules/features/admin/layouts/AdminLayout';
@@ -80,7 +80,7 @@ const PayphoneRedirectHandler = () => {
 
     // Si detectamos parámetros de Payphone en cualquier ruta, redirigir
     if (transactionId && clientTransactionId) {
-      console.log('🔄 [App.jsx] Redirección global de Payphone detectada');
+      console.log('ðŸ”„ [App.jsx] Redirección global de Payphone detectada');
       console.log('Parámetros:', { id: transactionId, clientTransactionId });
       console.log('Redirigiendo a: /app/payment-response');
 
@@ -176,3 +176,4 @@ const App = () => {
 };
 
 export default App;
+

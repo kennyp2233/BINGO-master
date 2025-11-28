@@ -1,8 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+﻿/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Box, Grid, Button, FormControl } from '@mui/material';
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'modules/shared/components/cards/MainCard';
 import { uiStyles } from 'components/search/styles';
 import { styled } from '@mui/material/styles';
 import { IconArrowLeft, IconBrandFacebook, IconBrandInstagram, IconBrandYoutube } from '@tabler/icons';
@@ -245,3 +245,4 @@ const BusinessInfo = () => {
 };
 
 export default BusinessInfo;
+

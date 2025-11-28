@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import {
   Avatar,
   Box,
@@ -22,7 +22,7 @@ import { getUsersListPaginated } from 'modules/features/admin/users';
 import { genConst } from 'store/constant';
 import PropTypes from 'prop-types';
 import { AddUserModal } from 'views/dashboard/Admin/Users/AddUserModal';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import User1 from 'assets/images/profile/profile-picture-6.jpg';
 
 export const UsersStepTable = ({ user, setUser }) => {

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Box, Button, Card, CardActions, FormControl, Grid, InputLabel, OutlinedInput } from '@mui/material';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import { authentication } from 'config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import AnimateButton from 'components/extended/AnimateButton';
+import AnimateButton from 'modules/shared/components/extended/AnimateButton';
 import Clipboard from 'clipboard';
 import { EmailShareButton, FacebookShareButton, WhatsappShareButton } from 'react-share';
 import { EmailIcon, FacebookIcon, WhatsappIcon } from 'react-share';
@@ -77,7 +77,7 @@ const Share = () => {
               <center>
                 <EmailShareButton
                   url={path}
-                  body="Hola : ), juntos hacia la construcción de un mejor futuro. Únete a 👉KHUSKA👈"
+                  body="Hola : ), juntos hacia la construcción de un mejor futuro. Ãšnete a ðŸ‘‰KHUSKAðŸ‘ˆ"
                   hashtag="#KHUSKA"
                   style={{ marginLeft: 10 }}
                 >
@@ -85,7 +85,7 @@ const Share = () => {
                 </EmailShareButton>
                 <FacebookShareButton
                   url={path}
-                  quote={'Hola : ), juntos hacia la construcción de un mejor futuro. Únete a 👉KHUSKA👈'}
+                  quote={'Hola : ), juntos hacia la construcción de un mejor futuro. Ãšnete a ðŸ‘‰KHUSKAðŸ‘ˆ'}
                   hashtag="#KHUSKA"
                   style={{ marginLeft: 10 }}
                 >
@@ -93,7 +93,7 @@ const Share = () => {
                 </FacebookShareButton>
                 <WhatsappShareButton
                   url={path}
-                  title={'Hola : ), juntos hacia la construcción de un mejor futuro. Únete a 👉KHUSKA👈'}
+                  title={'Hola : ), juntos hacia la construcción de un mejor futuro. Ãšnete a ðŸ‘‰KHUSKAðŸ‘ˆ'}
                   hashtag="#KHUSKA"
                   style={{ marginLeft: 10 }}
                 >
@@ -109,3 +109,4 @@ const Share = () => {
 };
 
 export default Share;
+

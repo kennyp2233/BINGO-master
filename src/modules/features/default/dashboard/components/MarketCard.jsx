@@ -205,74 +205,90 @@ const MarketCard = ({ name, date, id, transmition, state }) => {
                         </Typography>
                     </Stack>
 
-                    <Box sx={{ mt: 'auto', pt: 2, height: '48px', display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ mt: 'auto', pt: 2, minHeight: '48px', display: 'flex', alignItems: 'center' }}>
                         {!isBuying ? (
                             <Fade in={!isBuying}>
                                 <Stack direction="row" spacing={1} sx={{ width: '100%' }}>
-                                    <ActionButton
-                                        variant="contained"
-                                        startIcon={<IconShoppingCart size={18} />}
-                                        onClick={handleBuyClick}
-                                        sx={{ flexGrow: 1, width: 'auto' }}
-                                        disabled={isSoldOut}
-                                    >
-                                        {isSoldOut ? 'Agotado' : 'Comprar'}
-                                    </ActionButton>
-
-                                    <ActionButton
-                                        variant="outlined"
-                                        startIcon={<IconGridDots size={18} />}
-                                        sx={{ width: 'auto', px: 2, whiteSpace: 'nowrap' }}
-                                        onClick={handleQuickView}
-                                        disabled={isSoldOut}
-                                    >
-                                        Elegir
-                                    </ActionButton>
-
-                                    {state === 1 && (
+                                    {state === 1 ? (
+                                        <>
+                                            <ActionButton
+                                                variant="contained"
+                                                startIcon={<IconPlayerPlay size={18} />}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleNavigation('/app/play-bingo', { id, name, date, transmition });
+                                                }}
+                                                sx={{ flex: 1 }}
+                                            >
+                                                JUGAR
+                                            </ActionButton>
+                                            <ActionButton
+                                                variant="outlined"
+                                                startIcon={<IconShoppingCart size={18} />}
+                                                onClick={handleBuyClick}
+                                                disabled={isSoldOut}
+                                                sx={{ flex: 1 }}
+                                            >
+                                                COMPRAR
+                                            </ActionButton>
+                                        </>
+                                    ) : (
                                         <ActionButton
-                                            variant="outlined"
-                                            sx={{ width: 'auto', minWidth: '40px', px: 1 }}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleNavigation('/app/play-bingo', { id, name, date, transmition });
-                                            }}
+                                            variant="contained"
+                                            startIcon={<IconShoppingCart size={18} />}
+                                            onClick={handleBuyClick}
+                                            sx={{ flexGrow: 1, width: 'auto' }}
+                                            disabled={isSoldOut}
                                         >
-                                            <IconPlayerPlay size={18} />
+                                            {isSoldOut ? 'Agotado' : 'Comprar'}
                                         </ActionButton>
                                     )}
                                 </Stack>
                             </Fade>
                         ) : (
                             <Fade in={isBuying}>
-                                <Stack direction="row" spacing={1} sx={{ width: '100%', alignItems: 'center' }}>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: 'action.hover', borderRadius: '8px', p: 0.5, flexGrow: 1 }}>
-                                        <IconButton size="small" onClick={(e) => handleQuantityChange(e, -1)} sx={{ color: 'text.primary', p: 0.5 }}>
-                                            <IconMinus size={14} />
-                                        </IconButton>
-                                        <Typography sx={{ color: 'text.primary', fontWeight: 600, flexGrow: 1, textAlign: 'center', fontSize: '0.9rem' }}>
-                                            {quantity}
-                                        </Typography>
-                                        <IconButton size="small" onClick={(e) => handleQuantityChange(e, 1)} sx={{ color: 'text.primary', p: 0.5 }}>
-                                            <IconPlus size={14} />
-                                        </IconButton>
-                                    </Box>
+                                <Stack direction="column" spacing={1} sx={{ width: '100%' }}>
+                                    <Stack direction="row" spacing={1} sx={{ width: '100%', alignItems: 'center' }}>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: 'action.hover', borderRadius: '8px', p: 0.5, flexGrow: 1 }}>
+                                            <IconButton size="small" onClick={(e) => handleQuantityChange(e, -1)} sx={{ color: 'text.primary', p: 0.5 }}>
+                                                <IconMinus size={14} />
+                                            </IconButton>
+                                            <Typography sx={{ color: 'text.primary', fontWeight: 600, flexGrow: 1, textAlign: 'center', fontSize: '0.9rem' }}>
+                                                {quantity}
+                                            </Typography>
+                                            <IconButton size="small" onClick={(e) => handleQuantityChange(e, 1)} sx={{ color: 'text.primary', p: 0.5 }}>
+                                                <IconPlus size={14} />
+                                            </IconButton>
+                                        </Box>
 
-                                    <ActionButton
-                                        variant="success"
-                                        sx={{ width: 'auto', minWidth: '40px', px: 1, bgcolor: '#00C853' }}
-                                        onClick={handleConfirmBuy}
-                                    >
-                                        <IconCheck size={18} />
-                                    </ActionButton>
+                                        <ActionButton
+                                            variant="success"
+                                            sx={{ width: 'auto', minWidth: '40px', px: 1, bgcolor: '#00C853' }}
+                                            onClick={handleConfirmBuy}
+                                        >
+                                            <IconCheck size={18} />
+                                        </ActionButton>
 
-                                    <ActionButton
-                                        variant="outlined"
-                                        sx={{ width: 'auto', minWidth: '40px', px: 1, borderColor: '#ff5252', color: '#ff5252', '&:hover': { borderColor: '#ff1744', color: '#ff1744' } }}
-                                        onClick={handleCancelBuy}
+                                        <ActionButton
+                                            variant="outlined"
+                                            sx={{ width: 'auto', minWidth: '40px', px: 1, borderColor: '#ff5252', color: '#ff5252', '&:hover': { borderColor: '#ff1744', color: '#ff1744' } }}
+                                            onClick={handleCancelBuy}
+                                        >
+                                            <IconX size={18} />
+                                        </ActionButton>
+                                    </Stack>
+                                    <Button
+                                        variant="text"
+                                        size="small"
+                                        onClick={handleQuickView}
+                                        sx={{
+                                            textTransform: 'none',
+                                            color: 'text.secondary',
+                                            '&:hover': { color: 'primary.main', backgroundColor: 'transparent', textDecoration: 'underline' }
+                                        }}
                                     >
-                                        <IconX size={18} />
-                                    </ActionButton>
+                                        Elegir cartillas
+                                    </Button>
                                 </Stack>
                             </Fade>
                         )}

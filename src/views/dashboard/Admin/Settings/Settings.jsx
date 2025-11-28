@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+﻿/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import {
@@ -58,7 +58,7 @@ import { createDocument, deleteDocument, updateDocument, createLogRecord, getPar
 
 //types array
 import { types } from 'store/typesParam';
-import MessageDark from 'components/message/MessageDark';
+import MessageDark from 'modules/shared/components/message/MessageDark';
 import { ctaAccount, genConst } from 'store/constant';
 
 function searchingData(search) {
@@ -588,3 +588,4 @@ export default function Settings() {
     </Box>
   );
 }
+

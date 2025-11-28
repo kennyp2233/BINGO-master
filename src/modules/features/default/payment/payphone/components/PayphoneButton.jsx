@@ -1,10 +1,10 @@
-import React from 'react';
+﻿import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@mui/material';
 
 import PayPhoneIcon from 'assets/images/icons/payphone_icon.png';
 import PayphoneBox from './PayphoneBox';
-import CustomModal from 'components/Modal';
+import CustomModal from 'modules/shared/components/Modal';
 
 const PayPhoneButton = (props) => {
   const [openPayphone, setOpenPayphone] = React.useState(false);
