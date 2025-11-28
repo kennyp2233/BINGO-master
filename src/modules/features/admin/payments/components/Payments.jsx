@@ -28,8 +28,8 @@ import {
 import CircularProgress from '@mui/material/CircularProgress';
 import MessageDark from 'modules/shared/components/message/MessageDark';
 import { IconTrash, IconEdit, IconCircleX, IconPencil, IconReload, IconSearch, IconPlus, IconHomeDollar } from '@tabler/icons';
-import { createDocument, updateDocument } from 'modules/shared';
-import { getPaymentsListPaginated, getTotalPaidBenefit } from 'modules/features/default/payment';
+
+import { getPaymentsListPaginated, getTotalPaidBenefit, createPayment, updatePayment } from '../services/paymentsService';
 //Notifications
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -161,7 +161,8 @@ export default function Payments() {
         transactionId: null
       };
       setOpenLoader(true);
-      createDocument(collPayments, idd, object)
+      setOpenLoader(true);
+      createPayment(idd, object)
         .then(() => {
           setOpenLoader(false);
           setOpenCreate(false);
@@ -190,7 +191,8 @@ export default function Payments() {
         updateAt: fullDate()
       };
       setOpenLoader(true);
-      updateDocument(collPayments, id, object)
+      setOpenLoader(true);
+      updatePayment(id, object)
         .then(() => {
           setOpenLoader(false);
           setOpenCreate(false);
@@ -212,7 +214,7 @@ export default function Payments() {
       state: genConst.CONST_STA_INACT,
       deleteAt: fullDate()
     };
-    updateDocument(collPayments, id, object)
+    updatePayment(id, object)
       .then(() => {
         setOpenLoader(false);
         setOpenDelete(false);

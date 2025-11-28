@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ButtonGroup, Button, Box, Modal, Typography } from '@mui/material';
+import { ButtonGroup, Button, Box, Modal, Typography, TextField, Stack } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 //Notifications
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { checkForBingoWinner } from '../../services/gameService';
+import { checkForBingoWinner, updateGame } from '../../services/gameService';
 import { uiStyles } from '../../board/board.styles';
 import { titles } from '../../board/board.texts';
 import Confetti from 'react-confetti';
@@ -37,6 +37,7 @@ export default function Game() {
   const [showConfirmFinish, setShowConfirmFinish] = useState(false);
   const [checkingWinner, setCheckingWinner] = useState(false);
   const [showAllWinners, setShowAllWinners] = useState(false);
+  const [manualNumber, setManualNumber] = useState('');
 
   // Load game state from localStorage on component mount
   useEffect(() => {
@@ -78,7 +79,7 @@ export default function Game() {
     }
   }, []);
 
-  // Save game state to localStorage when it changes
+  // Save game state to localStorage and Firebase when it changes
   useEffect(() => {
     if (selectedGame) {
       localStorage.setItem('selectedGame', selectedGame);
@@ -87,8 +88,34 @@ export default function Game() {
     if (bingoNumbers.length > 0) {
       localStorage.setItem('bingoNumbers', JSON.stringify(bingoNumbers));
       localStorage.setItem('resultBingo', resultBingo);
+
+      // Auto-save to Firebase
+      const saveToFirebase = async () => {
+        try {
+          // Find the document ID for the selected game (ide is not the doc id usually, but let's check how games are stored)
+          // Assuming selectedGame is the 'ide' field, we need to find the doc id or if 'ide' is the doc id.
+          // In getGameById it queries by 'ide'. 
+          // However, updateDocument takes the doc ID. 
+          // We need to make sure we have the doc ID. 
+          // Let's assume for now we might need to query it or if games state has it.
+          // Looking at SelectEventGame (not visible here), it sets selectedGame.
+          // Let's look at games state.
+          const gameDoc = games.find(g => g.ide === selectedGame);
+          if (gameDoc && gameDoc.id) {
+            await updateGame(gameDoc.id, {
+              bingoNumbers: bingoNumbers,
+              currentNumber: number,
+              currentLetter: letter,
+              lastUpdate: new Date()
+            });
+          }
+        } catch (error) {
+          console.error("Error auto-saving game:", error);
+        }
+      };
+      saveToFirebase();
     }
-  }, [selectedGame, bingoNumbers, resultBingo]);
+  }, [selectedGame, bingoNumbers, resultBingo, games, number, letter]);
 
   const handleNextBall = () => {
     randomNumber(1, getTotalNumbers());
@@ -113,6 +140,31 @@ export default function Game() {
       //   setVisible(false);
       // }
     }
+  };
+
+  const handleManualAdd = () => {
+    const num = parseInt(manualNumber);
+    if (isNaN(num) || num < 1 || num > getTotalNumbers()) {
+      alert(`Por favor ingrese un número válido entre 1 y ${getTotalNumbers()}`);
+      return;
+    }
+
+    if (bingoNumbers.includes(num)) {
+      alert('Este número ya ha sido sorteado');
+      return;
+    }
+
+    setBingoNumbers((bingoNumbers) => [...bingoNumbers, num]);
+    if (cont > 0) {
+      handlePrev(number, letter);
+    }
+    setNumber(num);
+    handleSelectBall(num);
+    const letterForNum = getLetterForNumber(num);
+    setLetter(titles[letterForNum.toLowerCase()]);
+    setResultBingo(resultBingo + '-' + titles[letterForNum.toLowerCase()] + num);
+    setCont(cont + 1);
+    setManualNumber('');
   };
 
   const handleSelectBall = (id) => {
@@ -223,6 +275,30 @@ export default function Game() {
               Ver Ganadores
             </Button>
           </ButtonGroup>
+
+          <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
+            <TextField
+              label="Ingreso Manual"
+              variant="outlined"
+              size="small"
+              type="number"
+              value={manualNumber}
+              onChange={(e) => setManualNumber(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleManualAdd();
+                }
+              }}
+              sx={{ width: 150, bgcolor: 'white', borderRadius: 1 }}
+            />
+            <Button
+              variant="contained"
+              onClick={handleManualAdd}
+              disabled={!manualNumber || checkingWinner}
+            >
+              Agregar
+            </Button>
+          </Box>
         </center>
 
         {/* Tablero de juego  */}

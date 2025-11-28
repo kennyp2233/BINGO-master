@@ -1,6 +1,6 @@
 import { db } from 'config/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
-import { collUserCards } from 'store/collections';
+import { collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { collUserCards, collGames } from 'store/collections';
 import { checkBingoWin } from 'utils/verifyBingoWinner';
 
 /**
@@ -67,3 +67,10 @@ export const getUserEventCards = async (userId, eventId) => {
   });
   return list;
 };
+/**
+ * Actualiza los datos de un juego/evento
+ * @param {string} id - ID del documento del juego
+ * @param {Object} data - Datos a actualizar
+ * @returns {Promise<void>}
+ */
+export const updateGame = (id, data) => updateDoc(doc(db, collGames, id), data);

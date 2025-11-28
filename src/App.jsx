@@ -33,7 +33,7 @@ const AdminUsers = Loadable(lazy(() => import('views/dashboard/Admin/AdminUsers/
 const DashboardAdmin = Loadable(lazy(() => import('views/dashboard/Admin')));
 const Logs = Loadable(lazy(() => import('views/dashboard/Admin/Logs/Logs')));
 const Notifications = Loadable(lazy(() => import('views/dashboard/Admin/Notifications/Notifications')));
-const Payments = Loadable(lazy(() => import('views/dashboard/Admin/Payments/Payments')));
+const Payments = Loadable(lazy(() => import('modules/features/admin/payments/components/Payments')));
 const Settings = Loadable(lazy(() => import('views/dashboard/Admin/Settings/Settings')));
 const Share = Loadable(lazy(() => import('views/dashboard/Admin/Share/Share')));
 const UserProfile = Loadable(lazy(() => import('views/dashboard/Admin/Profile/UserProfile')));

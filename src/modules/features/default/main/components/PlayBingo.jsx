@@ -1,6 +1,6 @@
 ﻿import { useSearchParams } from 'react-router-dom';
 // material-ui
-import { Box, Grid, ButtonGroup, Button } from '@mui/material';
+import { Box, Grid, ButtonGroup, Button, Typography } from '@mui/material';
 import MessageDark from 'modules/shared/components/message/MessageDark';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -52,7 +52,27 @@ const PlayBingo = () => {
             </Grid>
             <Grid item lg={6} md={12} sm={12} xs={12}>
               <div style={{ marginTop: 10, padding: 5, height: 400, backgroundColor: '#000', borderRadius: 10 }}>
-                <ReactPlayer className="react-player" url={transmition || null} width="100%" height="100%" loop volume={0.1} playing />
+                {transmition ? (
+                  <ReactPlayer
+                    className="react-player"
+                    url={transmition}
+                    width="100%"
+                    height="100%"
+                    playing={true}
+                    controls={true}
+                    loop={false}
+                    volume={0.8}
+                    config={{
+                      youtube: {
+                        playerVars: { showinfo: 1 }
+                      }
+                    }}
+                  />
+                ) : (
+                  <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Typography variant="h5" color="white">Esperando señal en vivo...</Typography>
+                  </Box>
+                )}
               </div>
             </Grid>
             <Grid item lg={6} md={12} sm={12} xs={12} style={{ marginTop: 0 }}>
