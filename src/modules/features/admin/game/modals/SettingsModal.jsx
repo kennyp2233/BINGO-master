@@ -4,7 +4,7 @@ import { Modal, Box, Typography, FormGroup, FormControlLabel, Checkbox, Button }
 import { IconSettings } from '@tabler/icons';
 import { gameStyles } from '../styles/gameStyles';
 
-export const SettingsModal = ({ open, handleClose, quinaRules, setQuinaRules }) => {
+export const SettingsModal = ({ open, onClose, quinaRules, setQuinaRules }) => {
   const handleRuleChange = (event) => {
     setQuinaRules({
       ...quinaRules,
@@ -13,7 +13,7 @@ export const SettingsModal = ({ open, handleClose, quinaRules, setQuinaRules }) 
   };
 
   return (
-    <Modal open={open} onClose={handleClose} aria-labelledby="settings-modal-title">
+    <Modal open={open} onClose={onClose} aria-labelledby="settings-modal-title">
       <Box
         sx={{
           position: 'absolute',
@@ -60,7 +60,7 @@ export const SettingsModal = ({ open, handleClose, quinaRules, setQuinaRules }) 
         </FormGroup>
 
         <Box sx={{ mt: 4, display: 'flex', justifyContent: 'flex-end' }}>
-          <Button variant="contained" onClick={handleClose}>
+          <Button variant="contained" onClick={onClose}>
             Cerrar
           </Button>
         </Box>
@@ -71,7 +71,7 @@ export const SettingsModal = ({ open, handleClose, quinaRules, setQuinaRules }) 
 
 SettingsModal.propTypes = {
   open: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   quinaRules: PropTypes.object.isRequired,
   setQuinaRules: PropTypes.func.isRequired,
 };

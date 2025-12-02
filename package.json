@@ -1,7 +1,7 @@
 {
   "name": "bingo",
   "slug": "bingo",
-  "version": "1.0.1-20251128-185551",
+  "version": "1.0.1-20251202-012042",
   "private": true,
   "homepage": "",
   "dependencies": {
