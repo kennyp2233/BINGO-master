@@ -44,9 +44,9 @@ import { inputLabels, titles } from './AdminUsers.texts';
 import { uiStyles } from './AdminUsers.styles';
 
 //Utils
-import { fullDate } from 'utils/validations';
-import { generateId } from 'utils/idGenerator';
-import { searchingData } from 'utils/search';
+import { fullDate } from 'modules/shared/utils/validations';
+import { generateId } from 'modules/shared/utils/idGenerator';
+import { searchingData } from 'modules/shared/utils/search';
 
 export default function Users() {
   const [page, setPage] = useState(0);

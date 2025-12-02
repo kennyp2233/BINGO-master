@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { authentication } from 'config/firebase';
 import ReactPlayer from 'react-player';
-import { getLetters } from 'utils/bingoConfig';
+import { getLetters } from 'modules/shared/utils/bingoConfig';
 import { ticketsService } from '../../tickets/services/ticketsService';
 
 const PlayBingo = () => {

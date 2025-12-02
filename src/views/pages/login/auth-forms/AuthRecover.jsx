@@ -15,8 +15,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // project imports
 import AnimateButton from 'modules/shared/components/extended/AnimateButton';
-import { generateId } from 'utils/idGenerator';
-import { fullDate } from 'utils/validations';
+import { generateId } from 'modules/shared/utils/idGenerator';
+import { fullDate } from 'modules/shared/utils/validations';
 import { genConst } from 'store/constant';
 import { createLog } from 'config/firebaseEvents';
 import { collUsers } from 'store/collections';

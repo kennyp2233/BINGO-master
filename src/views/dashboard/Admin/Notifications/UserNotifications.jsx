@@ -19,8 +19,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import * as Msg from 'store/message';
-import { generateId } from 'utils/idGenerator';
-import { fullDate, getCurrentHourFormatted } from 'utils/validations';
+import { generateId } from 'modules/shared/utils/idGenerator';
+import { fullDate, getCurrentHourFormatted } from 'modules/shared/utils/validations';
 
 const UserNotifications = () => {
   const theme = useTheme();

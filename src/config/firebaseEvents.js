@@ -33,9 +33,9 @@ import {
 } from 'store/collections';
 import { genConst } from 'store/constant';
 import { labels } from 'store/labels';
-import { generateId } from 'utils/idGenerator';
-import { fullDate, generateDate } from 'utils/validations';
-import { checkBingoWin } from 'utils/verifyBingoWinner';
+import { generateId } from 'modules/shared/utils/idGenerator';
+import { fullDate, generateDate } from 'modules/shared/utils/validations';
+import { checkBingoWin } from 'modules/shared/utils/verifyBingoWinner';
 
 //Encontrar Sesión activa
 export function isSessionActive(navigate) {

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Box, Button, ButtonGroup, Modal, Typography } from '@mui/material';
 
-export const ConfirmFinish = ({ showConfirmFinish, setShowConfirmFinish }) => {
+export const FinishGameModal = ({ showConfirmFinish, setShowConfirmFinish }) => {
   const confirmFinishGame = () => {
     // Clear all game progress data from localStorage
     localStorage.removeItem('selectedGame');
@@ -45,7 +45,7 @@ export const ConfirmFinish = ({ showConfirmFinish, setShowConfirmFinish }) => {
   );
 };
 
-ConfirmFinish.propTypes = {
+FinishGameModal.propTypes = {
   showConfirmFinish: PropTypes.bool,
   setShowConfirmFinish: PropTypes.func
 };

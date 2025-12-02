@@ -1,4 +1,4 @@
-export const titles = {
+export const gameTexts = {
   require: 'Todos los campos marcados con * son obligatorios.!',
   requireField: 'Ingrese la cantidad que desea generar!',
   successCreate: 'Partida creada correctamente!.',

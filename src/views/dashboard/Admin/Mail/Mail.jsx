@@ -12,7 +12,7 @@ import { titles, inputLabels } from './Mail.text';
 import CircularProgress from '@mui/material/CircularProgress';
 //Notifications
 import 'react-toastify/dist/ReactToastify.css';
-import { fullDate } from 'utils/validations';
+import { fullDate } from 'modules/shared/utils/validations';
 
 const Mail = () => {
   const [dataList, setDataList] = useState([]);

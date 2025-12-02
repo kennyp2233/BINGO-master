@@ -20,7 +20,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // project imports
 import AnimateButton from 'modules/shared/components/extended/AnimateButton';
 import { collUserBillData } from 'store/collections';
-import { fullDate } from 'utils/validations';
+import { fullDate } from 'modules/shared/utils/validations';
 
 const CardWrapper = styled(MainCard)(() => ({
   backgroundColor: '#A9A9A9',

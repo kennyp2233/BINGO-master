@@ -2,8 +2,8 @@ import { db } from 'config/firebase';
 import { collection, query, where, getDocs, updateDoc, writeBatch, doc } from 'firebase/firestore';
 import { createDocument } from 'modules/shared/services/firebaseCommon';
 import { collCards, collUserCards, collPayments } from 'store/collections';
-import { generateId } from 'utils/idGenerator';
-import { fullDate } from 'utils/validations';
+import { generateId } from 'modules/shared/utils/idGenerator';
+import { fullDate } from 'modules/shared/utils/validations';
 
 /**
  * Verifica la disponibilidad de una cartilla específica

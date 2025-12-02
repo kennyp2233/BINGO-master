@@ -45,7 +45,7 @@ const UsersCards = Loadable(lazy(() => import('views/dashboard/Admin/Users/Users
 const CardGame = Loadable(lazy(() => import('modules/features/admin/cards').then(module => ({ default: module.CardGame }))));
 const CardsByGame = Loadable(lazy(() => import('modules/features/admin/cards').then(module => ({ default: module.CardsByGame }))));
 const CardsUser = Loadable(lazy(() => import('modules/features/admin/card-assignment').then(module => ({ default: module.CardsUser }))));
-const Game = Loadable(lazy(() => import('modules/features/admin/game').then(module => ({ default: module.Game }))));
+const Game = Loadable(lazy(() => import('modules/features/admin/game').then(module => ({ default: module.GameBoard }))));
 const GameUsers = Loadable(lazy(() => import('modules/features/admin/events').then(module => ({ default: module.GameUsers }))));
 const NewGame = Loadable(lazy(() => import('modules/features/admin/events').then(module => ({ default: module.NewGame }))));
 const StatsCardGame = Loadable(lazy(() => import('modules/features/admin/cards').then(module => ({ default: module.StatsCardGame }))));

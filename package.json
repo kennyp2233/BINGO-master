@@ -1,7 +1,7 @@
 {
   "name": "bingo",
   "slug": "bingo",
-  "version": "1.0.1-20251128-185128",
+  "version": "1.0.1-20251128-185551",
   "private": true,
   "homepage": "",
   "dependencies": {
@@ -36,7 +36,7 @@
     "firebase": "^10.4.0",
     "firebase-tools": "^13.1.0",
     "formik": "^2.2.9",
-    "framer-motion": "^6.3.16",
+    "framer-motion": "^6.5.1",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.0",
     "lodash": "^4.17.21",

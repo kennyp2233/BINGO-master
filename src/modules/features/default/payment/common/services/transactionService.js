@@ -6,8 +6,8 @@ import { db } from 'config/firebase';
 import { collection, addDoc, updateDoc, doc, setDoc } from 'firebase/firestore';
 import { PAYPHONE_CONFIG } from 'store/constant';
 import { collUserCards, collCards } from 'store/collections';
-import { generateId } from 'utils/idGenerator';
-import { fullDate } from 'utils/validations';
+import { generateId } from 'modules/shared/utils/idGenerator';
+import { fullDate } from 'modules/shared/utils/validations';
 import { paymentResponseService } from './paymentResponseService';
 
 const { SERVER_URL, TOKEN } = PAYPHONE_CONFIG;

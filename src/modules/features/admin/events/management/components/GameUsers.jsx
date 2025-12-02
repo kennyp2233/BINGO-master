@@ -36,9 +36,9 @@ import { titles } from '../../management/management.texts';
 import { uiStyles } from '../../management/management.styles';
 
 //Utils
-import { fullDate } from 'utils/validations';
-import { generateId } from 'utils/idGenerator';
-import { searchingData } from 'utils/search';
+import { fullDate } from 'modules/shared/utils/validations';
+import { generateId } from 'modules/shared/utils/idGenerator';
+import { searchingData } from 'modules/shared/utils/search';
 
 export default function GameUsers() {
   let navigate = useNavigate();

@@ -10,10 +10,10 @@ import * as Msg from 'store/message';
 //Notifications
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { generateId } from 'utils/idGenerator';
+import { generateId } from 'modules/shared/utils/idGenerator';
 import { createDocument } from 'config/firebaseEvents';
 import { collMail } from 'store/collections';
-import { fullDate } from 'utils/validations';
+import { fullDate } from 'modules/shared/utils/validations';
 
 const CardWrapper = styled(MainCard)(() => ({
   backgroundColor: 'rgba(0,0,0,0.6)',

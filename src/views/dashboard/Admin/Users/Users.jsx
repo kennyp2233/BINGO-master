@@ -41,8 +41,8 @@ import { collHistUsr, collUsers } from 'store/collections';
 import { inputLabels, titles } from './Users.texts';
 import { uiStyles } from './Users.styles';
 //Utils
-import { fullDate } from 'utils/validations';
-import { generateId } from 'utils/idGenerator';
+import { fullDate } from 'modules/shared/utils/validations';
+import { generateId } from 'modules/shared/utils/idGenerator';
 import { useNavigate } from 'react-router';
 
 export default function Users() {

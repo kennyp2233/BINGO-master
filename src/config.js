@@ -1,5 +1,5 @@
 const config = {
-  version: '1.0.1-20251128-185128',
+  version: '1.0.1-20251128-185551',
   basename: '/',
   defaultPath: '/',
   fontFamily: `'Montserrat', sans-serif`,

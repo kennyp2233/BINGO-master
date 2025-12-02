@@ -49,11 +49,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { collSettings } from 'store/collections';
 import * as Msg from 'store/message';
 import * as LogMsg from 'store/logsMessages';
-import { generateId } from 'utils/idGenerator';
+import { generateId } from 'modules/shared/utils/idGenerator';
 import { titles, inputLabels } from './Settings.texts';
 
 //Utils
-import { fullDate } from 'utils/validations';
+import { fullDate } from 'modules/shared/utils/validations';
 import { createDocument, deleteDocument, updateDocument, createLogRecord, getParamsData } from 'config/firebaseEvents';
 
 //types array

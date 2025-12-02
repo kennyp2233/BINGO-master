@@ -13,7 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // project imports
 import AnimateButton from 'modules/shared/components/extended/AnimateButton';
-import { fullDate } from 'utils/validations';
+import { fullDate } from 'modules/shared/utils/validations';
 import { profileService } from '../services/profileService';
 import { uiStyles } from './Profile.styles';
 import { titles } from './Profile.texts';

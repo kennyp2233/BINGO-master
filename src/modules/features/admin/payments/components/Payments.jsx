@@ -38,8 +38,8 @@ import { collPayments } from 'store/collections';
 import { inputLabels, titles } from './Payments.texts';
 import { uiStyles } from './Payments.styles';
 //Utils
-import { fullDate } from 'utils/validations';
-import { generateId } from 'utils/idGenerator';
+import { fullDate } from 'modules/shared/utils/validations';
+import { generateId } from 'modules/shared/utils/idGenerator';
 
 export default function Payments() {
   const [page, setPage] = useState(0);

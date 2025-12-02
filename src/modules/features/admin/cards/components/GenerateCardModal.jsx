@@ -16,7 +16,7 @@ import {
 import { IconCards, IconPlus } from '@tabler/icons';
 import { uiStyles } from 'modules/features/admin/cards';
 import { useTheme } from '@mui/material/styles';
-import { generateUniqueBingoCards } from 'utils/generateUniqueBingoCards';
+import { generateUniqueBingoCards } from 'modules/shared/utils/generateUniqueBingoCards';
 import { createDocument } from 'modules/shared/services/firebaseCommon';
 import { collCards } from 'store/collections';
 import { toast } from 'react-toastify';

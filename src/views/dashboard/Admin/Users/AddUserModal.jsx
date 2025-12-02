@@ -7,9 +7,9 @@ import { genConst } from 'store/constant';
 import { IconCircleX, IconDeviceFloppy, IconSquarePlus } from '@tabler/icons';
 import { createDocument } from 'config/firebaseEvents';
 import { collUsers } from 'store/collections';
-import { fullDate } from 'utils/validations';
+import { fullDate } from 'modules/shared/utils/validations';
 import { toast } from 'react-toastify';
-import { generateId } from 'utils/idGenerator';
+import { generateId } from 'modules/shared/utils/idGenerator';
 import PropTypes from 'prop-types';
 
 const defaultValues = {

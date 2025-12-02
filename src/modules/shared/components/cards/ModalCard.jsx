@@ -5,7 +5,7 @@ import { IconCircleX, IconEye } from '@tabler/icons';
 
 import { titles, uiStyles } from 'modules/features/admin/cards';
 import { genConst } from 'store/constant';
-import { getLetters } from 'utils/bingoConfig';
+import { getLetters } from 'modules/shared/utils/bingoConfig';
 
 export const ModalCard = ({ bingoCard }) => {
   const [openCard, setOpenCard] = useState(false);

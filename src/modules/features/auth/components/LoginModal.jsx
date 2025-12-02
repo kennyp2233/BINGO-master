@@ -27,8 +27,8 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfi
 import { authentication } from 'config/firebase';
 import { createLog, getProfileUser, createDocument } from 'config/firebaseEvents';
 import { genConst } from 'store/constant';
-import { fullDate, generateDate } from 'utils/validations';
-import { generateId } from 'utils/idGenerator';
+import { fullDate, generateDate } from 'modules/shared/utils/validations';
+import { generateId } from 'modules/shared/utils/idGenerator';
 import { collUsers } from 'store/collections';
 import AnimateButton from 'modules/shared/components/extended/AnimateButton';
 import { toast } from 'react-toastify';

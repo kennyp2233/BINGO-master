@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, Grid, Modal, Typography, CircularProgress, Paper } from '@mui/material';
-import { IconCircleX, IconEye } from '@tabler/icons';
+import { Box, Button, Grid, Modal, Typography, CircularProgress, Paper, Tabs, Tab } from '@mui/material';
+import { IconCircleX, IconEye, IconTrophy } from '@tabler/icons';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from 'config/firebase';
-import { uiStyles } from '../../board/board.styles';
-import { titles } from '../../board/board.texts';
+import { gameStyles } from '../styles/gameStyles';
+import { gameTexts } from '../constants/gameTexts';
 import { genConst } from 'store/constant';
 
 // Bingo card display component for modal
@@ -100,7 +100,7 @@ const CardModal = ({ open, handleClose, bingoNumbers, cardNumber }) => {
     <Modal open={open} onClose={handleClose} aria-labelledby="card-modal-title">
       <Box
         sx={{
-          ...uiStyles.modalStylesDelete,
+          ...gameStyles.modalStylesDelete,
           width: '400px',
           maxWidth: '90%',
           p: 3
@@ -122,7 +122,7 @@ const CardModal = ({ open, handleClose, bingoNumbers, cardNumber }) => {
             style={{ backgroundColor: genConst.CONST_CREATE_COLOR, color: '#FFF' }}
             onClick={handleClose}
           >
-            {titles.buttonClose}
+            {gameTexts.buttonClose}
           </Button>
         </Box>
       </Box>
@@ -141,11 +141,12 @@ BingoCardDisplay.propTypes = {
   bingoNumbers: PropTypes.array
 };
 
-export const ShowAllWinners = ({ open, handleClose, eventId }) => {
-  const [winners, setWinners] = useState([]);
-  const [loading, setLoading] = useState(true);
+export const WinnersListModal = ({ open, handleClose, eventId, bingoWinners = [], quinaWinners = [] }) => {
+  const [tabValue, setTabValue] = useState(0);
   const [selectedCard, setSelectedCard] = useState(null);
   const [cardModalOpen, setCardModalOpen] = useState(false);
+  const [raffling, setRaffling] = useState(false);
+  const [raffledWinner, setRaffledWinner] = useState(null);
 
   const openCardModal = (winnerData) => {
     setSelectedCard(winnerData);
@@ -156,46 +157,40 @@ export const ShowAllWinners = ({ open, handleClose, eventId }) => {
     setCardModalOpen(false);
   };
 
-  useEffect(() => {
-    const fetchWinners = async () => {
-      if (!open || !eventId) return;
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+    setRaffledWinner(null); // Reset raffle when switching tabs
+  };
 
-      setLoading(true);
-      try {
-        const boardsRef = collection(db, 'Boards');
-        const q = query(boardsRef, where('eventId', '==', eventId));
-        const querySnapshot = await getDocs(q);
+  const handleRaffle = () => {
+    const currentList = tabValue === 0 ? bingoWinners : quinaWinners;
+    if (currentList.length === 0) return;
 
-        const userCardsRef = collection(db, 'UserCards');
-        const userCardsQuery = query(userCardsRef, where('eventId', '==', eventId));
-        const userCardsSnapshot = await getDocs(userCardsQuery);
-        console.log('userCardsSnapshot total', userCardsSnapshot.docs.length);
+    setRaffling(true);
+    setRaffledWinner(null);
 
-        const winnersData = [];
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          if (data.winner) {
-            winnersData.push(data);
-          }
-        });
+    let counter = 0;
+    const maxIterations = 20;
+    const interval = setInterval(() => {
+      const randomIndex = Math.floor(Math.random() * currentList.length);
+      setRaffledWinner(currentList[randomIndex]);
+      counter++;
 
-        setWinners(winnersData);
-      } catch (error) {
-        console.error('Error fetching winners:', error);
-      } finally {
-        setLoading(false);
+      if (counter >= maxIterations) {
+        clearInterval(interval);
+        setRaffling(false);
       }
-    };
+    }, 100);
+  };
 
-    fetchWinners();
-  }, [open, eventId]);
+  const currentWinners = tabValue === 0 ? bingoWinners : quinaWinners;
 
   return (
     <>
       <Modal open={open} onClose={handleClose} aria-labelledby="winners-modal-title" aria-describedby="winners-modal-description">
         <Box
           sx={{
-            ...uiStyles.modalStylesDelete,
+            ...gameStyles.modalStylesDelete,
             width: '98%', // Even wider modal (98% of viewport)
             maxWidth: 1800, // Increased max width
             height: '92vh', // Slightly taller
@@ -208,29 +203,59 @@ export const ShowAllWinners = ({ open, handleClose, eventId }) => {
             Ganadores del evento
           </Typography>
 
-          {loading ? (
-            <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
-              <CircularProgress color="primary" size={60} />
+          <Tabs value={tabValue} onChange={handleTabChange} centered sx={{ mb: 3 }}>
+            <Tab label={`Bingo (${bingoWinners.length})`} />
+            <Tab label={`Quina (${quinaWinners.length})`} />
+          </Tabs>
+
+          {currentWinners.length > 1 && (
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 4, p: 2, bgcolor: '#f5f5f5', borderRadius: 2 }}>
+               <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleRaffle}
+                disabled={raffling}
+                startIcon={<IconTrophy />}
+                size="large"
+                sx={{ mb: 2, px: 4 }}
+              >
+                {raffling ? 'Sorteando...' : 'Sortear Ganador'}
+              </Button>
+              
+              {raffledWinner && (
+                <Paper elevation={6} sx={{ p: 2, bgcolor: '#fff9c4', border: '2px solid #fbc02d', textAlign: 'center', minWidth: 300 }}>
+                    <Typography variant="h6" color="text.secondary">¡El ganador del sorteo es!</Typography>
+                    <Typography variant="h3" color="primary" sx={{ fontWeight: 'bold', my: 1 }}>
+                        {raffledWinner.userName}
+                    </Typography>
+                    <Typography variant="body1">
+                        Cartilla: {raffledWinner.num}
+                    </Typography>
+                </Paper>
+              )}
             </Box>
-          ) : winners.length === 0 ? (
+          )}
+
+          {currentWinners.length === 0 ? (
             <Typography variant="h5" align="center" sx={{ my: 5, color: 'text.secondary' }}>
-              No se encontraron ganadores para este evento
+              No se encontraron ganadores en esta categoría
             </Typography>
           ) : (
             <Grid container spacing={3}>
-              {winners.map((winner, index) => (
-                <Grid item key={winner.id || index}>
+              {currentWinners.map((winner, index) => (
+                <Grid item key={winner.id || index} xs={12}>
                   <Paper
-                    elevation={3}
+                    elevation={raffledWinner === winner ? 12 : 3}
                     sx={{
                       p: 3,
                       borderRadius: 2,
-                      backgroundColor: '#f9f9f9',
+                      backgroundColor: raffledWinner === winner ? '#fff9c4' : '#f9f9f9',
                       height: '100%',
                       width: '100%', // Ensure full width within the grid item
                       display: 'flex',
                       flexDirection: 'column',
                       transition: 'transform 0.2s, box-shadow 0.3s',
+                      border: raffledWinner === winner ? '2px solid #fbc02d' : 'none',
                       '&:hover': {
                         transform: 'translateY(-5px)',
                         boxShadow: 6
@@ -250,7 +275,7 @@ export const ShowAllWinners = ({ open, handleClose, eventId }) => {
                         textOverflow: 'ellipsis'
                       }}
                     >
-                      {winner.winner.userName || 'Usuario desconocido'}
+                      {winner.userName || 'Usuario desconocido'}
                     </Typography>
 
                     <Box sx={{ flex: 1, width: '100%' }}>
@@ -261,7 +286,7 @@ export const ShowAllWinners = ({ open, handleClose, eventId }) => {
                           </Typography>
                         </Grid>
                         <Grid item xs={6}>
-                          <Typography variant="body1">{winner.winner.num || 'No disponible'}</Typography>
+                          <Typography variant="body1">{winner.num || 'No disponible'}</Typography>
                         </Grid>
 
                         <Grid item xs={6}>
@@ -278,7 +303,7 @@ export const ShowAllWinners = ({ open, handleClose, eventId }) => {
                               textOverflow: 'ellipsis'
                             }}
                           >
-                            {winner.winner.userName || 'No disponible'}
+                            {winner.userName || 'No disponible'}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -300,7 +325,7 @@ export const ShowAllWinners = ({ open, handleClose, eventId }) => {
                           width: '100%'
                         }}
                       >
-                        {winner.result || 'No disponible'}
+                        {winner.bingoNumbers ? winner.bingoNumbers.join(', ') : 'No disponible'}
                       </Box>
                     </Box>
 
@@ -318,8 +343,8 @@ export const ShowAllWinners = ({ open, handleClose, eventId }) => {
                           backgroundColor: '#0277bd'
                         }
                       }}
-                      onClick={() => openCardModal(winner.winner)}
-                      disabled={!winner.winner.bingoNumbers}
+                      onClick={() => openCardModal(winner)}
+                      disabled={!winner.bingoNumbers}
                     >
                       Ver Cartilla
                     </Button>
@@ -342,7 +367,7 @@ export const ShowAllWinners = ({ open, handleClose, eventId }) => {
               }}
               onClick={handleClose}
             >
-              {titles.buttonClose}
+              {gameTexts.buttonClose}
             </Button>
           </Box>
         </Box>
@@ -361,7 +386,7 @@ export const ShowAllWinners = ({ open, handleClose, eventId }) => {
   );
 };
 
-ShowAllWinners.propTypes = {
+WinnersListModal.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   eventId: PropTypes.string

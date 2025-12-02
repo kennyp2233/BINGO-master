@@ -33,7 +33,6 @@ export default defineConfig({
       assets: path.resolve(__dirname, 'src/assets'),
       config: path.resolve(__dirname, 'src/config'),
       modules: path.resolve(__dirname, 'src/modules'),
-      utils: path.resolve(__dirname, 'src/utils'),
       hooks: path.resolve(__dirname, 'src/hooks')
     }
   }

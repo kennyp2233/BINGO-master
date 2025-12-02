@@ -29,8 +29,8 @@ import { IconCalendar, IconCards, IconCheck, IconHomeStats, IconSearch, IconTras
 import MessageDark from 'modules/shared/components/message/MessageDark';
 import { titles } from 'modules/features/admin/cards';
 import { bingoValues, genConst } from 'store/constant';
-import { searchingCard, searchingGameData } from 'utils/search';
-import { generateUniqueBingoCards } from 'utils/generateUniqueBingoCards';
+import { searchingCard, searchingGameData } from 'modules/shared/utils/search';
+import { generateUniqueBingoCards } from 'modules/shared/utils/generateUniqueBingoCards';
 import { ModalCard } from 'modules/shared/components/cards/ModalCard';
 import { useNavigate } from 'react-router';
 

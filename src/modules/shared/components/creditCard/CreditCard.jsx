@@ -11,11 +11,11 @@ import { FormControl, Grid, InputLabel, OutlinedInput, Button, Typography, Modal
 
 //Assets
 import { genConst } from 'store/constant';
-import { generateId } from 'utils/idGenerator';
+import { generateId } from 'modules/shared/utils/idGenerator';
 import { updateDocument } from 'config/firebaseEvents';
 import { collSubscription } from 'store/collections';
 import { useUsersId } from 'hooks/useUserId';
-import { endDateWithParam, initDate } from 'utils/validations';
+import { endDateWithParam, initDate } from 'modules/shared/utils/validations';
 import { Box } from '@mui/system';
 
 const CreditCard = (props) => {

@@ -33,8 +33,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { genConst } from 'store/constant';
-import { fullDate } from 'utils/validations';
-import { generateId } from 'utils/idGenerator';
+import { fullDate } from 'modules/shared/utils/validations';
+import { generateId } from 'modules/shared/utils/idGenerator';
 import { collUsers } from 'store/collections';
 
 const AuthLogin = ({ ...others }) => {

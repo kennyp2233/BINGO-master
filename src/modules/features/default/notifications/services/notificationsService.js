@@ -13,8 +13,8 @@ import {
 } from 'store/collections';
 import { genConst } from 'store/constant';
 import { labels } from 'store/labels';
-import { generateId } from 'utils/idGenerator';
-import { generateDate } from 'utils/validations';
+import { generateId } from 'modules/shared/utils/idGenerator';
+import { generateDate } from 'modules/shared/utils/validations';
 
 export const getGeneralNotifications = async () => {
   const list = [];

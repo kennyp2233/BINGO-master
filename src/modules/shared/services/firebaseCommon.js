@@ -2,7 +2,7 @@
 import { db } from 'config/firebase';
 import { setDoc, updateDoc, deleteDoc, doc, collection, getDocs, query, where, addDoc } from 'firebase/firestore';
 import { collUsers, collLog } from 'store/collections';
-import { fullDate } from 'utils/validations';
+import { fullDate } from 'modules/shared/utils/validations';
 
 /**
  * Crea un documento en una colección específica

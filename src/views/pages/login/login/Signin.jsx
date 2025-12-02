@@ -19,7 +19,7 @@ import { collUsers } from 'store/collections';
 // Notifications
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { fullDate } from 'utils/validations';
+import { fullDate } from 'modules/shared/utils/validations';
 import { createSearchParams } from 'react-router-dom';
 
 const provider = new GoogleAuthProvider();

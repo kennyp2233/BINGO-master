@@ -28,7 +28,7 @@ import { genConst } from 'store/constant';
 // assets
 import bg01 from 'assets/images/05.webp';
 import AuthCardWrapperMid from '../AuthCardWrapperMid';
-import { endDateWithParam, initDate } from 'utils/validations';
+import { endDateWithParam, initDate } from 'modules/shared/utils/validations';
 //import PaymentMethods from '../inscription/PaymentMethods';
 
 const Subscription = () => {

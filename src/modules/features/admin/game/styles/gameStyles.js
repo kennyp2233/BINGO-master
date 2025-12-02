@@ -1,6 +1,6 @@
 import { genConst } from 'store/constant';
 
-export const uiStyles = {
+export const gameStyles = {
   box: { width: '100%', height: '100%', backgroundColor: '#FFF', borderRadius: 4, padding: 2 },
   appbar: { borderRadius: 15, height: 60, backgroundColor: genConst.CONST_APPBAR },
   box2: { flexGrow: 1, display: { xs: 'none', md: 'flex' } },
