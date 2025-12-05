@@ -4,7 +4,7 @@ import { IconArrowBackUp } from '@tabler/icons';
 import { toast } from 'react-toastify';
 import { titles } from '../card.texts';
 import { uiStyles } from '../card.styles';
-import { returnCard, returnCardByOrder } from '../services/cardsService';
+import { returnCard, returnCardByOrder, returnCardsByOrderBatch } from '../services/cardsService';
 
 const ReturnCardModal = ({ eventId, onCardReturned }) => {
   const [open, setOpen] = useState(false);
@@ -28,13 +28,42 @@ const ReturnCardModal = ({ eventId, onCardReturned }) => {
     setLoading(true);
     try {
       if (searchType === 'order') {
-        // Devolver por número de cartilla
-        const cardOrder = parseInt(cardValue);
-        if (isNaN(cardOrder)) {
-          throw new Error('El número de cartilla debe ser un número válido.');
+        // Parsear entrada para soportar rangos y listas (ej: "1-5, 8, 10")
+        const parts = cardValue.split(',').map(p => p.trim()).filter(p => p);
+        const ordersToReturn = [];
+
+        for (const part of parts) {
+          if (part.includes('-')) {
+            const [start, end] = part.split('-').map(n => parseInt(n));
+            if (!isNaN(start) && !isNaN(end) && start <= end) {
+              for (let i = start; i <= end; i++) {
+                ordersToReturn.push(i);
+              }
+            } else {
+              throw new Error(`Rango inválido: ${part}`);
+            }
+          } else {
+            const num = parseInt(part);
+            if (!isNaN(num)) {
+              ordersToReturn.push(num);
+            } else {
+              throw new Error(`Número inválido: ${part}`);
+            }
+          }
         }
-        await returnCardByOrder(eventId, cardOrder);
-        toast.success(`Cartilla número ${cardOrder} devuelta con éxito.`);
+
+        if (ordersToReturn.length === 0) {
+          throw new Error('No se encontraron números válidos.');
+        }
+
+        if (ordersToReturn.length === 1) {
+          await returnCardByOrder(eventId, ordersToReturn[0]);
+          toast.success(`Cartilla número ${ordersToReturn[0]} devuelta con éxito.`);
+        } else {
+          const result = await returnCardsByOrderBatch(eventId, ordersToReturn);
+          toast.success(`Se devolvieron ${result.success} cartillas de ${result.totalRequested}.`);
+        }
+
       } else {
         // Devolver por ID único
         await returnCard(eventId, cardValue);
@@ -81,21 +110,26 @@ const ReturnCardModal = ({ eventId, onCardReturned }) => {
 
           <TextField
             fullWidth
-            label={searchType === 'order' ? 'Número de Cartilla' : 'ID de la Cartilla'}
+            label={searchType === 'order' ? 'Número de Cartilla (o rango ej: 1-10)' : 'ID de la Cartilla'}
             variant="outlined"
             value={cardValue}
             onChange={(e) => setCardValue(e.target.value)}
             sx={{ mt: 2 }}
             inputProps={{
-              inputMode: searchType === 'order' ? 'numeric' : 'text',
-              pattern: searchType === 'order' ? '[0-9]*' : undefined
+              inputMode: 'text'
             }}
             helperText={
               searchType === 'order'
-                ? 'Ingrese el número que aparece en la cartilla impresa (ej: 1, 2, 15, etc.)'
+                ? 'Ingrese números (ej: 1, 5) o rangos (ej: 10-20). Separe con comas.'
                 : 'Ingrese el ID único completo de la cartilla'
             }
           />
+
+          <Box sx={{ mt: 2, p: 2, bgcolor: '#fff4e5', borderRadius: 1, border: '1px solid #ffcc80' }}>
+            <p style={{ margin: 0, color: '#663c00', fontSize: '0.875rem' }}>
+              <strong>¡Atención!</strong> Esta acción es irreversible. Si devuelve la cartilla, el jugador perderá el acceso a ella y no podrá recuperarla.
+            </p>
+          </Box>
 
           <Grid container spacing={2} sx={{ mt: 2 }}>
             <Grid item xs={6}>

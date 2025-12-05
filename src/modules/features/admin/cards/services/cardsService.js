@@ -51,6 +51,64 @@ export const returnCardByOrder = async (eventId, cardOrder) => {
 };
 
 /**
+ * Devuelve múltiples cartillas por sus números de orden
+ * @param {string} eventId - ID del evento
+ * @param {number[]} cardOrders - Array de números de cartilla
+ * @returns {Promise<{success: number, totalRequested: number}>}
+ */
+export const returnCardsByOrderBatch = async (eventId, cardOrders) => {
+  if (!cardOrders || cardOrders.length === 0) return { success: 0, totalRequested: 0 };
+
+  const uniqueOrders = [...new Set(cardOrders)];
+  const chunks = [];
+  for (let i = 0; i < uniqueOrders.length; i += 10) {
+    chunks.push(uniqueOrders.slice(i, i + 10));
+  }
+
+  const { writeBatch } = await import('firebase/firestore');
+
+  let successCount = 0;
+  const docsToUpdate = [];
+
+  for (const chunk of chunks) {
+    const q = query(
+      collection(db, collCards),
+      where('event', '==', eventId),
+      where('order', 'in', chunk)
+    );
+    const snapshot = await getDocs(q);
+
+    snapshot.forEach(docSnap => {
+      const data = docSnap.data();
+      if (data.state !== 2) {
+        docsToUpdate.push(docSnap.ref);
+        successCount++;
+      }
+    });
+  }
+
+  const batchChunks = [];
+  for (let i = 0; i < docsToUpdate.length; i += 500) {
+    batchChunks.push(docsToUpdate.slice(i, i + 500));
+  }
+
+  for (const batchChunk of batchChunks) {
+    const currentBatch = writeBatch(db);
+    batchChunk.forEach(ref => {
+      currentBatch.update(ref, { state: 2 });
+    });
+    await currentBatch.commit();
+  }
+
+  clearCardsPaginationCache(eventId);
+
+  return {
+    success: successCount,
+    totalRequested: uniqueOrders.length
+  };
+};
+
+/**
  * Obtiene todas las cartillas de un evento
  * @param {string} id - ID del evento
  * @returns {Promise<Array>} Lista de cartillas ordenadas por order
@@ -323,7 +381,7 @@ export const getCardsByEventUsers = async (event, user) => {
  * Función para limpiar caches de paginación de cartillas
  * @param {string|null} eventId - ID del evento (opcional)
  * @param {number|null} stateFilter - Filtro de estado (opcional)
- */
+ * */
 export const clearCardsPaginationCache = (eventId = null, stateFilter = null) => {
   if (eventId) {
     const cacheKey = `${eventId}-${stateFilter}`;
